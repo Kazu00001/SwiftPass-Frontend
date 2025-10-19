@@ -1,0 +1,21 @@
+.nfc_status_card{
+    width: clamp(21rem, 20vw, 30rem);
+    height: clamp(9rem, 25vh, 20rem);
+    background-color: white;
+    border: 10px solid #535E73;
+    border-radius: 8px;
+    box-sizing: border-box;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-left: 1rem;
+}
+
+.nfc_status_divider{
+    width: 100%;
+    height: 3rem;
+    background-color: #535E73;
+    border: none;
+    margin: 0;
+    margin-top: 1.4rem;
+    margin-bottom: 1rem;
+
+}

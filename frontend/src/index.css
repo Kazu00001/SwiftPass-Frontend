@@ -1,0 +1,10 @@
+:root {
+
+  background-color: #F7F7F7;
+}
+body {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+}

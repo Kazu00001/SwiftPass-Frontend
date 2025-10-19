@@ -1,0 +1,31 @@
+.dashboard_container{
+    flex-grow: 1;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    box-sizing: border-box;
+    padding: 1rem;
+}
+.dashboard_top{
+    width: 100%;
+    height: 28vh;
+    display: flex;
+    align-items: flex-end;
+    box-sizing: border-box;
+}
+.dashboard_middle{
+    width: 100%;
+    height: 30vh;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-sizing: border-box;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
+.dashboard_bottom{
+    width: 100%;
+    height: 30vh;
+    display: flex;
+    gap: 1rem;
+}

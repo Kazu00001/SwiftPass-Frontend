@@ -1,0 +1,9 @@
+.attendance-monitor_container{
+    width: clamp(20rem, 23rem, 30rem);
+    height: 100vh;
+    background-color: #ffffff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
+    display: flex;
+    flex-direction: column;
+    flex-shrink: 0;
+}

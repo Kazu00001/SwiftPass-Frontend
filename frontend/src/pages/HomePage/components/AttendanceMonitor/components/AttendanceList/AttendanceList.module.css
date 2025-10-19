@@ -1,0 +1,6 @@
+.attendance-list_container{
+    width: 100%;
+    flex-grow: 1;
+    overflow-y: auto;
+    min-height: 0;
+}

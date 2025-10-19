@@ -1,0 +1,7 @@
+.navbar_container{
+    width: 9rem;
+    height: 100vh;
+    background-color: #20212E;
+    padding: 0;
+    flex-shrink: 0;
+}
