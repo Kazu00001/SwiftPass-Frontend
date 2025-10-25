@@ -7,23 +7,41 @@
     color: white;
     position: relative;
     z-index: 1000;
+    font-family: poppins, sans-serif;
+    box-sizing: border-box;
 }
 
 
-.navbar_links ul {
-    list-style: none; /* Elimina los puntos de la lista */
+.navbar_logo{
+    width: 100%;
+    height: 4rem;
     display: flex;
-    flex-direction: column;
-    gap: 1rem; /* Espacio entre los enlaces */
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    font-weight: 400;
     margin: 0;
     padding: 0;
+    box-sizing: border-box;
+    border-bottom: 2px solid #33334D;
 }
 
-.navbar_links a {
-    color: white; /* Color del texto de los enlaces */
-    text-decoration: none; /* Sin subrayado */
+.navbar_button{
+    width: 100%;
+    height: 3rem;
+    background: none;
+    border: none;
+    color: white;
+    font-size: 1rem;
+    font-family: 'Poppins', sans-serif;
+    cursor: pointer;
+    display: flex;
+    text-align: left;
+    align-items: center;
+    justify-content: flex-start;
+    padding-left: 1rem;
 }
 
-.navbar_links a:hover {
-    text-decoration: underline; /* Subrayado al pasar el mouse */
+.navbar_button:hover {
+    background-color: #33334D;
 }
