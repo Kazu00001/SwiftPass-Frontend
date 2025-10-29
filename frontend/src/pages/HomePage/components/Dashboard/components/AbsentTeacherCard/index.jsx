@@ -1,6 +1,6 @@
 import Styles from './AbsentTeacherCard.module.css';
 import { useState } from 'react';
-import { TEACHERS } from './Teachers';
+import { TEACHERS } from '../PendingRequestsCard/Teachers.js';
 import TeacherEventCard from '../TeacherEventCard';
 
 export default function AbsentTeacherCard() {

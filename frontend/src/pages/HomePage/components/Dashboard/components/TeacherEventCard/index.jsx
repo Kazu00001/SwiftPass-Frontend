@@ -7,7 +7,8 @@ export default function TeacherEventCard({ name, photo, status, time }) {
     useEffect(() => {
         if (status === 1) setEvent("Justificación");
         if (status === 2) setEvent("Permiso");
-        if (status !== 1 && status !== 2) setEvent("Ausencia");
+        if (status === 4) setEvent("Asistencia"); 
+        if (status !== 1 && status !== 2 && status !== 4) setEvent("Ausencia");
     }, [status]);
 
     return (

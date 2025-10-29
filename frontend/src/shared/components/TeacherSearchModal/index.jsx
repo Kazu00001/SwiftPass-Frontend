@@ -19,7 +19,7 @@ const TeacherSearchModal = ({ isOpen, onClose }) => {
                     </div>
 
                     <div className={Styles['modal_results']}>
-                        {TEACHERS.length > 100 ? (
+                        {TEACHERS.length > 0 ? (
                             TEACHERS.map((teacher) => (
                                 <TeacherResultBox key={teacher.id} teacher={teacher} />
                             ))
