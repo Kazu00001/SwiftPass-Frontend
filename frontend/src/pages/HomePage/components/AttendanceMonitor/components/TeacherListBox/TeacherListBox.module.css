@@ -8,7 +8,7 @@
     background-color: white;
 }
 .teacher-list-box_container:hover {
-    background-color: #dbdbdb;
+    background-color: #efeeeec3;
 }
 
 .teacher-photo_container{
@@ -26,19 +26,59 @@
     user-select: none;
 }
 
-.teacher-name_container{
-    width: auto;
+.teacher-name_container {
+    width: calc(100% - 7.3rem);
     height: 100%;
     display: flex;
     align-items: center;
 }
-.teacher-name{
-    font-size: .9rem;
+.teacher-name {
+    font-size: 0.85rem;
     font-weight: 500;
     font-family: poppins, sans-serif;
     color: #333333;
     user-select: none;
     padding: 0;
     margin: 0;
-    margin-left: .5rem;
+    margin-left: 0.5rem;
+
+    white-space: nowrap;   
+    overflow: hidden;    
+    text-overflow: ellipsis; 
+    max-width: 90%;         
+    display: block;          
+}
+.teacher-time_container {
+  width: 3rem;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center; 
+  align-items: flex-end;    
+  gap: 5px;      
+  box-sizing: border-box;      
+}
+
+.teacher-time{
+    font-size: 0.7rem;
+    font-weight: 400;
+    font-family: poppins, sans-serif;
+    color: #838383;
+    user-select: none;
+    margin: 0;
+    padding: 0;
+
+    white-space: nowrap;      /* evita salto de línea */
+    max-width: 100%;          /* asegura que el ancho máximo sea el del contenedor padre */
+    display: block;           /* para que funcione correctamente text-overflow */
+}
+
+.teacher-status{
+    width: .9rem;
+    height: .9rem;
+    border-radius: 100%;
+    background-color: #d4d4d4;
+}
+.teacher-status_active{
+    background-color: #92CCFF;
 }

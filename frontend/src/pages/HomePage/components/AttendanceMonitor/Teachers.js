@@ -1,7 +1,7 @@
 export const TEACHERS = [
   {
     id: "T001",
-    name: "Dr. Evelyn Reed",
+    name: "Evelin Marisol Concepción Hernandez Jauregui",
     photo: "https://randomuser.me/api/portraits/women/1.jpg",
     time: "07:58 AM",
     status: 1,
@@ -162,7 +162,7 @@ export const TEACHERS = [
   },
   {
     id: "T002",
-    name: "Mr. Samuel Carter",
+    name: "Sergio Flores Rosas",
     photo: "https://randomuser.me/api/portraits/men/2.jpg",
     time: "08:10 AM",
     status: 2,
@@ -253,7 +253,7 @@ export const TEACHERS = [
   },
   {
     "id": "T003",
-    "name": "Ms. Olivia Chen",
+    "name": "Elba Esmeralda Puga Olivares",
     "photo": "https://randomuser.me/api/portraits/women/3.jpg",
     "time": "07:45 AM",
     "status": 1,
