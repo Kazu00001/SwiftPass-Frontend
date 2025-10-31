@@ -47,46 +47,46 @@ export default function TeacherSchedule({ schedule }) {
 
   return (
     <div className={Styles['schedule_wrapper']}>
-    {/* === HEADER TABLE (fija arriba) === */}
-    <div className={Styles['schedule_header_container']}>
-        <table className={Styles['schedule_table_header']}>
-        <thead>
-            <tr>
-            <th>Hora</th>
-            {days.map((d) => (
-                <th key={d.key}>{d.label}</th>
-            ))}
-            </tr>
-        </thead>
-        </table>
-    </div>
+        {/* === HEADER TABLE (fija arriba) === */}
+        <div className={Styles['schedule_header_container']}>
+            <table className={Styles['schedule_table_header']}>
+            <thead>
+                <tr>
+                <th>Hora</th>
+                {days.map((d) => (
+                    <th key={d.key}>{d.label}</th>
+                ))}
+                </tr>
+            </thead>
+            </table>
+        </div>
 
-    {/* === BODY TABLE (scrolleable) === */}
-    <div className={Styles['schedule_body_container']}>
-        <table className={Styles['schedule_table_body']}>
-        <tbody>
-            {timeSlots.map((slot) => (
-            <tr key={slot.start}>
-                <td>{`${slot.start} - ${slot.end}`}</td>
-                {days.map((d) => {
-                const classItem = getClassForSlot(d.key, slot.start, slot.end);
-                return (
-                    <td key={d.key}>
-                    {classItem ? (
-                        <div className={Styles['class_cell']}>
-                        {classItem.location}
-                        </div>
-                    ) : (
-                        <div className={Styles['empty_cell']}>—</div>
-                    )}
-                    </td>
-                );
-                })}
-            </tr>
-            ))}
-        </tbody>
-        </table>
-    </div>
+        {/* === BODY TABLE (scrolleable) === */}
+        <div className={Styles['schedule_body_container']}>
+            <table className={Styles['schedule_table_body']}>
+            <tbody>
+                {timeSlots.map((slot) => (
+                <tr key={slot.start}>
+                    <td>{`${slot.start} - ${slot.end}`}</td>
+                    {days.map((d) => {
+                    const classItem = getClassForSlot(d.key, slot.start, slot.end);
+                    return (
+                        <td key={d.key}>
+                        {classItem ? (
+                            <div className={Styles['class_cell']}>
+                            {classItem.location}
+                            </div>
+                        ) : (
+                            <div className={Styles['empty_cell']}>—</div>
+                        )}
+                        </td>
+                    );
+                    })}
+                </tr>
+                ))}
+            </tbody>
+            </table>
+        </div>
     </div>
   );
 }
