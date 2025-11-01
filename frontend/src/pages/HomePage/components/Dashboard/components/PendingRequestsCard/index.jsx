@@ -20,7 +20,7 @@ export default function PendingRequestsCard() {
     return (
         <div className={Styles['pending_requests_card']}>
             <section className={Styles['pending_requests_header']}>
-                <h2 className={Styles['pending_requests_title']}>Pending Requests</h2>
+                <h2 className={Styles['pending_requests_title']}>Solicitudes Pendientes</h2>
                 <button 
                     className={`${Styles['pending_requests_button']} ${activeTab[0] === 'Todos' ? Styles['pending_requests_button_active'] : ''}`} 
                     onClick={() => setActiveTab(['Todos', 0])}>Todos</button>

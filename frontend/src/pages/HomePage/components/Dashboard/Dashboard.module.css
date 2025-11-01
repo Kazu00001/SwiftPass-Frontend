@@ -1,10 +1,12 @@
 .dashboard_container{
-    flex-grow: 1;
+    width: calc(100vw - clamp(18rem, 21rem, 26rem) - 9rem);
+    min-width: 36rem;
     height: 100vh;
     display: flex;
     flex-direction: column;
     box-sizing: border-box;
     padding: 1rem;
+    background-color: aqua;
 }
 .dashboard_top{
     width: 100%;

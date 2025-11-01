@@ -11,7 +11,7 @@
 }
 
 .attendance-list_container:hover::-webkit-scrollbar {
-  opacity: 1; /* Visible al hacer hover */
+  opacity: 1;
 }
 
 .attendance-list_container::-webkit-scrollbar-track {
