@@ -1,6 +1,6 @@
 import Styles from './AttendanceList.module.css';
 import TeacherListBox from '../TeacherListBox';
-import { TEACHERS } from '../../Teachers';
+import { TEACHERS } from '../../../Dashboard/components/PendingRequestsCard/Teachers.js';
 
 const AttendanceList = () => {
   return (

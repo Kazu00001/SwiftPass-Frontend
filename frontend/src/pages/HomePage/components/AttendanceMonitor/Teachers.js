@@ -1,7 +1,7 @@
 export const TEACHERS = [
   {
     "id": "T001",
-    "name": "Dr. Evelyn Reed",
+    "name": "Dr. Evelyn cccc",
     "photo": "https://randomuser.me/api/portraits/women/1.jpg",
     "time": "07:58 AM",
     "status": 1
