@@ -1,0 +1,95 @@
+
+
+/* ==== TABLA DE HORARIO ==== */
+.schedule_table {
+  width: 100%;
+  height: 100%;
+  border-collapse: collapse;
+  border: 1px solid #d0d0d0;
+  text-align: center;
+  font-size: 0.95rem;
+  border-radius: 10px;
+  overflow: scroll;
+}
+
+.schedule_table thead {
+  color: rgb(56, 56, 56);
+}
+
+.schedule_table th,
+.schedule_table td {
+  border: 1px solid #d9d9d9;
+  padding: 0.75rem;
+  vertical-align: middle;
+}
+
+.schedule_table th {
+  font-weight: 600;
+  font-size: 0.9rem;
+  text-transform: capitalize;
+}
+
+.schedule_table tbody tr:nth-child(even) {
+  background-color: #f8f9fa;
+}
+
+/* ==== CELDAS CON CLASE ==== */
+.class_cell {
+  background-color: #e3f2fd;
+  border-radius: 8px;
+  padding: 0.5rem;
+  box-shadow: 0 1px 4px rgba(25, 118, 210, 0.2);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.class_cell:hover {
+  transform: scale(1.03);
+  box-shadow: 0 2px 6px rgba(25, 118, 210, 0.25);
+}
+
+.class_cell strong {
+  display: block;
+  font-size: 0.95rem;
+  color: #0d47a1;
+}
+
+.class_cell p {
+  margin: 0.25rem 0;
+  color: #333;
+  font-size: 0.9rem;
+}
+
+.class_cell small {
+  color: #555;
+  font-size: 0.8rem;
+}
+
+/* ==== CELDAS VACÍAS ==== */
+.empty_cell {
+  color: #aaa;
+  font-size: 0.85rem;
+  font-style: italic;
+}
+
+/* ==== RESPONSIVE ==== */
+@media (max-width: 768px) {
+  .schedule_table th,
+  .schedule_table td {
+    padding: 0.5rem;
+    font-size: 0.8rem;
+  }
+
+  .class_cell {
+    padding: 0.4rem;
+  }
+
+  .class_cell strong {
+    font-size: 0.85rem;
+  }
+
+  .class_cell p,
+  .class_cell small {
+    font-size: 0.75rem;
+  }
+}
+
