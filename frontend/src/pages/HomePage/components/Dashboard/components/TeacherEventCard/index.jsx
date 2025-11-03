@@ -21,7 +21,7 @@ export default function TeacherEventCard({ name, photo, status, time }) {
             <div className={Styles['teacher_event_photo_container']}>
                 <img 
                     src={photo} 
-                    alt={name} 
+                    alt='' 
                     className={Styles['teacher_event_photo']} 
                     draggable="false"
                 />

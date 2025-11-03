@@ -152,7 +152,8 @@
     CONTENEDOR PRINCIPAL DEL PERFIL (CUERPO DEL MODAL)
 ============================================================ */
 .teacher_profile_container {
-  flex: 1;
+  width: 100%;
+  height: calc(100% - 8rem);
   display: flex;
   box-sizing: border-box;
   padding-inline: 2rem;
