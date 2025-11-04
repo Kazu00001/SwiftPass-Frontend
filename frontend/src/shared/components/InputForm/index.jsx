@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import Styles from './InputForm.module.css';
 
-const InputForm = ({title, type, Width, Height, options, onChange, content, value}) => {
+const InputForm = ({title, type, Width, Height, options, onChange, content, value, name}) => {
 
     const [visiblePassword, setVisiblePassword] = useState(false);
 
@@ -10,6 +10,7 @@ const InputForm = ({title, type, Width, Height, options, onChange, content, valu
             {type !== 'select' && type !== 'area' ? (
                 <div className={Styles.inputFormContainer} style={{width: Width, height: Height}}>
                     <input 
+                        name={name}
                         type={type === 'password' && visiblePassword ? 'text' : type} 
                         className={Styles.inputForm} 
                         required
@@ -37,7 +38,7 @@ const InputForm = ({title, type, Width, Height, options, onChange, content, valu
                 <div className={Styles.inputFormContainer}  style={{width: Width, height: Height}}>
                     {type === 'select' && (
                         <>
-                            <select name="" id="" className={Styles.inputForm} onChange={onChange} required style={{width: Width, height: Height}} defaultValue={content}>
+                            <select name={name} id="" className={Styles.inputForm} onChange={onChange} required style={{width: Width, height: Height}} defaultValue={content}>
                                 {options?.map((optionVal) => <option selected={ optionVal === value } value={optionVal} key={optionVal}>{optionVal}</option>)}
                             </select>
                             <label htmlFor="" className={Styles.labelInputForm}>{title}</label>
@@ -46,7 +47,7 @@ const InputForm = ({title, type, Width, Height, options, onChange, content, valu
                     {type === 'area' && (
                         <>
                             <textarea 
-                                name="" 
+                                name={name} 
                                 id="" 
                                 cols="30" 
                                 rows="10" 
