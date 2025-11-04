@@ -1,11 +1,20 @@
 import Styles from './PendingRequestsCard.module.css';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { TEACHERS } from '../PendingRequestsCard/Teachers.js';
 import TeacherEventCard from '../TeacherEventCard';
+import EmptyBox from '../EmptyBox/index.jsx';
+import PendingRequestsSkeleton from '../PendingRequestsSkeleton/index.jsx';
 
 export default function PendingRequestsCard() {
     const [activeTab, setActiveTab] = useState(['Todos', 0]);
     const [isReversed, setIsReversed] = useState(false);
+
+    const [isLoading, setIsLoading] = useState(true); 
+
+    useEffect(() => {
+        const timer = setTimeout(() => setIsLoading(false), 3000);
+        return () => clearTimeout(timer);
+    }, []);
 
     const filteredTeachers = () => {
         let filtered = TEACHERS;
@@ -20,7 +29,7 @@ export default function PendingRequestsCard() {
     return (
         <div className={Styles['pending_requests_card']}>
             <section className={Styles['pending_requests_header']}>
-                <h2 className={Styles['pending_requests_title']}>Pending Requests</h2>
+                <h2 className={Styles['pending_requests_title']}>Solicitudes Pendientes</h2>
                 <button 
                     className={`${Styles['pending_requests_button']} ${activeTab[0] === 'Todos' ? Styles['pending_requests_button_active'] : ''}`} 
                     onClick={() => setActiveTab(['Todos', 0])}>Todos</button>
@@ -36,19 +45,28 @@ export default function PendingRequestsCard() {
                     {isReversed ? 'Mostrar Original' : 'Invertir Lista'}
                 </button>
             </section>
+
+        {
+        isLoading ? (
+            <PendingRequestsSkeleton />
+        ) : (
             <section className={Styles['pending_requests_body']}>
-                {
-                    filteredTeachers().map(teacher => (
-                        <TeacherEventCard 
-                            key={teacher.id} 
-                            name={teacher.name} 
-                            photo={teacher.photo} 
-                            status={teacher.status}
-                            time={teacher.time} 
-                        />
+            {
+                filteredTeachers().length === 0
+                ? <EmptyBox />
+                : filteredTeachers().map(teacher => (
+                    <TeacherEventCard 
+                        key={teacher.id} 
+                        name={teacher.name} 
+                        photo={teacher.photo} 
+                        status={teacher.status}
+                        time={teacher.time} 
+                    />
                     ))
-                }
+            }
             </section>
+        )
+        }
         </div>
     );
 }

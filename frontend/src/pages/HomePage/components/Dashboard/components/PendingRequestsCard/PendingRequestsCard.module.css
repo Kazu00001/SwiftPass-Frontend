@@ -1,7 +1,7 @@
 .pending_requests_card {
-    width: calc(100vw - clamp(20rem, 23rem, 30rem) - 11rem);
-    min-width: 40rem;
-    height: 30vh;
+    width: calc(100vw - clamp(21rem, 21rem, 26rem) - 9rem);
+    min-width: 34rem;
+    height: clamp(11rem, 30vh, 30vh);
     background-color: white;
     display: flex;
     flex-direction: column;
@@ -12,7 +12,8 @@
 
 .pending_requests_header {
     width: 100%;
-    height: 3rem;
+    height: 2.5rem;
+    flex-shrink: 0;
     display: flex;
     align-items: center;
     padding-left: 1rem;
@@ -43,9 +44,11 @@
     border-radius: 100px;
     cursor: pointer;
     font-family: 'Poppins', sans-serif;
-    font-size: 0.8rem;
+    font-size: 0.7rem;
     font-weight: 500;
     user-select: none;
+
+    white-space: nowrap;   
 
 }
 
@@ -54,14 +57,56 @@
     color: white;
 }
 
+
+
+
+
+ 
 .pending_requests_body {
-    width: 100%; /* Mantiene el ancho del contenedor */
-    display: flex; /* Acomoda elementos en fila */
-    overflow-x: auto; /* Permite el desplazamiento horizontal */
-    overflow-y: hidden; /* Evita el desplazamiento vertical */
+    width: 100%;
+    display: flex;
+    overflow-x: auto;
+    overflow-y: hidden;
     box-sizing: border-box;
-    white-space: nowrap; /* Evita que los elementos se envuelvan */
-    scroll-snap-type: x mandatory; /* Habilita el efecto de "snap" */
-    gap: .5rem; /* Espaciado entre los elementos */
+    white-space: nowrap;
+    scroll-snap-type: x mandatory;
+    gap: .5rem;
     padding: .5rem;
+
+    scrollbar-width: thin;
+    scrollbar-color: transparent transparent;
+}
+
+
+.ending_requests_body::-webkit-scrollbar {
+  height: 8px;
+  background: transparent;
+}
+
+.ending_requests_body::-webkit-scrollbar-track {
+  background: transparent;
+  border-radius: 10px;
+}
+
+.ending_requests_body::-webkit-scrollbar-thumb {
+  background: transparent;
+  border-radius: 10px;
+  transition: background-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+.ending_requests_body:hover::-webkit-scrollbar-track {
+  background: rgba(255,255,255,1);
+}
+
+.ending_requests_body:hover::-webkit-scrollbar-thumb {
+  background: #dbdbdbce;
+  box-shadow: inset 0 0 0 1px rgba(0,0,0,0.02);
+}
+
+.ending_requests_body:hover::-webkit-scrollbar-thumb:hover {
+  background: #c2c2c2ce;
+}
+
+.ending_requests_body:hover {
+  scrollbar-color: #dbdbdbce rgba(255,255,255,1);
 }
