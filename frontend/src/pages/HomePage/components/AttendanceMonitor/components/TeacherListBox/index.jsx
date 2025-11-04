@@ -5,12 +5,12 @@ export default function TeacherListBox({ name, photo, status, time, onClick }) {
   return (
     <button className={Styles['teacher-list-box_container']} onClick={onClick}>
         <section className={Styles['teacher-photo_container']}>
-            <img 
+            {/* <img 
                 className={Styles['teacher-photo']}
                 src={userIcon} 
                 alt=''
                 draggable="false"
-            />
+            /> */}
             <img 
                 className={Styles['teacher-photo']}
                 src={photo || userIcon} 
