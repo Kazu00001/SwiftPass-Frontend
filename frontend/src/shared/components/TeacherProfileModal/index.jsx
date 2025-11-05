@@ -1,5 +1,8 @@
 import Styles from './TeacherProfileModal.module.css';
 import TeacherSchedule from './components/TeacherSchedule';
+import RequestHistory from './components/RequestHistory';
+import AttendanceCalendar from './components/AttendanceCalendar';
+
 import { useState } from 'react';
 
 export default function TeacherProfileModal({ teacher, isOpen, onClose }) {
@@ -14,8 +17,8 @@ export default function TeacherProfileModal({ teacher, isOpen, onClose }) {
         <TeacherProfileHeader teacher={teacher} onClose={onClose} activeCase={activeCase} />
 
         <div className={Styles['teacher_profile_container']}>
-          {activeCase === 1 && <TeacherCase1 schedule={teacher.schedule} />}
-          {activeCase === 2 && <TeacherCase2 schedule={teacher.schedule} />}
+          {activeCase === 1 && <TeacherCase1 schedule={teacher.schedule} setActiveCase={setActiveCase} />}
+          {activeCase === 2 && <TeacherCase2 schedule={teacher.schedule}/>}
         </div>
       </div>
     </div>
@@ -59,11 +62,18 @@ function TeacherProfileHeader({ teacher, onClose, activeCase }) {
    ° Subcomponente: TeacherCase1
    - Contenedor que renderiza el horario del profesor.
 -------------------------------------------------------- */
-function TeacherCase1({ schedule }) {
+function TeacherCase1({ schedule, setActiveCase }) {
   return (
     <div className={Styles['teacher_case1_container']}>
         <div className={Styles['schedule_main_container']}>
             <TeacherSchedule schedule={schedule} />
+        </div>
+        <div className={Styles['request_history_container']}>
+            <RequestHistory />
+            <button 
+              className={Styles['view_attendance_history_button']}
+              onClick={() => setActiveCase(2)}
+            >Ver Historial de Asistencias</button>
         </div>
     </div>
   );
@@ -72,6 +82,10 @@ function TeacherCase1({ schedule }) {
 function TeacherCase2({ schedule }) {
   return (
     <div className={Styles['teacher_case2_container']}>
+
+      <div className={Styles['attendance_calendar_main_container']}>
+        <AttendanceCalendar teacherId={schedule.teacherId} isAdmin={true} />
+      </div>
     </div>
   );
 }
