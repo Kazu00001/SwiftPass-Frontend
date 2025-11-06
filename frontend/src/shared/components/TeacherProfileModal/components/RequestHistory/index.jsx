@@ -1,7 +1,20 @@
 import Styles from './RequestHistory.module.css';
-import {requests} from './Teachers';
+import {getRequestById} from './Teachers';
+import { useEffect, useState } from 'react';
 
-export default function RequestHistory({ }) {
+export default function RequestHistory({id_teacher}) {
+    const [requests, setRequests] = useState([]);
+    
+    useEffect(() => {
+        if (id_teacher) {
+            const fetchRequests = async () => {
+                const data = await getRequestById(id_teacher);
+                setRequests(data.records);
+            };
+            fetchRequests();
+        }
+    }, [id_teacher]);
+
     return (
         <div className={Styles['request_history_container']}>
             {

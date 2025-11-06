@@ -10,8 +10,13 @@ const AttendanceList = () => {
 
     const handleTeacherClick = (teacher) => {
         setSelectedTeacher(teacher);
-        setIsModalOpen(true);
+        // open modal when selectedTeacher is set to avoid render with undefined
     };
+
+    // Ensure modal opens only after selectedTeacher has been set
+    React.useEffect(() => {
+      if (selectedTeacher) setIsModalOpen(true);
+    }, [selectedTeacher]);
 
     const handleCloseModal = () => {
         setIsModalOpen(false);

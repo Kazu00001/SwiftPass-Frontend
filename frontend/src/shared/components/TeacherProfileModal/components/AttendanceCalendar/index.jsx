@@ -1,12 +1,13 @@
 import React, { useEffect, useRef, useState } from "react";
 import Styles from "./AttendanceCalendar.module.css";
-import { attendanceData, schedule } from "./attendanceData.js";
+import { fetchAttendanceData, fechtSchedule } from "./attendanceData.js";
 
 const STATUS = {
-  0: { label: "Inasistencia", color: "#e86666ff" },
-  1: { label: "Asistencia", color: "#3b82f6" },
-  2: { label: "Retardo", color: "#ecd44dff" },
-  3: { label: "Justificado", color: "#f6a23bff" },
+  1: { label: "Justificado", color: "#e86666ff" },
+  2: { label: "Permiso", color: "#3b82f6" },
+  3: { label: "Inasistencia", color: "#ecd44dff" },
+  4: { label: "Asistencia", color: "#f6a23bff" },
+  5: { label: "Retardo", color: "#e1ec46ff" },
 };
 
 const formatDate = (y, m, d) => `${y}-${String(m).padStart(2, "0")}-${String(d).padStart(2, "0")}`;
@@ -14,14 +15,62 @@ const formatDate = (y, m, d) => `${y}-${String(m).padStart(2, "0")}-${String(d).
 // 🔠 Mapeo de días
 const DAYS_MAP = ["sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"];
 
-export default function AttendanceCalendar({ isAdmin = true }) {
+export default function AttendanceCalendar({ isAdmin = true, teacherId }) {
   const today = new Date();
   const [year, setYear] = useState(today.getFullYear());
   const [month, setMonth] = useState(today.getMonth() + 1);
-  const [data, setData] = useState(attendanceData);
+  // const [data, setData] = useState(attendanceData);
   const [menu, setMenu] = useState(null);
   const gridRef = useRef(null);
+  const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [schedule, setSchedule] = useState([]);
 
+  useEffect(() => {
+    let mounted = true;
+    const load = async () => {
+      if (!teacherId) return;
+      setLoading(true);
+      try {
+        const res = await fetchAttendanceData(teacherId);
+        if (!mounted) return;
+        setData(Array.isArray(res) ? res : []);
+      } catch (err) {
+        if (!mounted) return;
+        setData([]);
+        console.error('Error loading attendance data:', err);
+      } finally {
+        if (mounted) setLoading(false);
+      }
+    };
+    load();
+    return () => {
+      mounted = false;
+    };
+  }, [teacherId]);
+      useEffect(() => {
+      let mounted = true;
+      const load = async () => {
+        if (!teacherId) return;
+        setLoading(true);
+        try {
+          const res = await fechtSchedule(teacherId);
+          if (!mounted) return;
+          setSchedule(res);
+        } catch (err) {
+          if (!mounted) return;
+          setSchedule([]);
+          console.error('Error loading schedule data:', err);
+        } finally {
+          if (mounted) setLoading(false);
+        }
+      };
+      load();
+      return () => {
+        mounted = false;
+      };
+    }, [teacherId]);
+    
   const monthName = new Date(year, month - 1).toLocaleString("es-ES", {
     month: "long",
     year: "numeric",
