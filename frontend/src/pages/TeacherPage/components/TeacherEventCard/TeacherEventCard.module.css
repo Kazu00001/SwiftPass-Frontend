@@ -1,0 +1,151 @@
+.teacher_event_card{
+    width: calc(clamp(10rem, 28vh, 25vh) - 2.5rem);
+    height: calc(clamp(10rem, 28vh, 30vh) - 2.5rem);
+    flex-shrink: 0;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: #DBDBDB;
+    border: 3px solid #b9b9b9;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+    position: relative;
+    cursor: pointer;
+}
+
+.teacher_event_card:hover{
+    background-color: #cecece;
+    transition: .3s;
+}
+
+.teacher_event_card h4{
+    margin: 0;
+    padding: 0;
+    color: #626262;
+    font-family: 'Poppins', sans-serif;
+    font-size: .8rem;
+    font-weight: 500;
+    text-align: left;
+    position: absolute;
+    left: 0;
+}
+
+.teacher_event_card h3{
+    margin: 0;
+    padding: 3px 6px;
+    color: white;
+    font-family: 'Poppins', sans-serif;
+    font-size: .7rem;
+    font-weight: 400;
+    background-color: #a9a9a9;
+    border-radius: 100px;
+    position: absolute;
+    right: 0;
+}
+
+.teacher_event_card p{
+    color: #626262;
+    font-family: 'Poppins', sans-serif;
+    font-size: .8rem;
+    font-weight: 600;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+
+    white-space: nowrap;   
+    overflow: hidden;    
+    text-overflow: ellipsis; 
+    max-width: 90%;         
+    display: block;   
+}
+
+.teacher_event_top{
+    width: 100%;
+    height: 1rem;
+    display: flex;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-family: 'Poppins', sans-serif;
+    box-sizing: border-box;
+    padding: 0 0.5rem;
+    text-align: center;
+    position: absolute;
+    top: 1px;
+    width: 90%;
+}
+
+.teacher_event_photo_container{
+    width: calc(clamp(10rem, 28vh, 35vh) / 2);
+    height: calc(clamp(10rem, 28vh, 35vh) / 2);
+    overflow: hidden;
+    display: flex;
+    flex-shrink: 0;
+    justify-content: center;
+    align-items: center;
+    box-sizing: border-box;
+    border-radius: 100%;
+    border: 3px solid white;
+    background-color: white;
+    position: absolute;
+}
+
+.teacher_event_name_container{
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    padding: 0.5rem;
+    position: absolute;
+    bottom: -4px;
+}
+
+/* ° ° ° ° ° ° ° ° ° ° ° Event 1 ° ° ° ° ° ° ° ° ° ° ° */
+.teacher_event_1{
+    background-color: #e1875ed6;
+    border: 4px solid  #E1885E;
+}
+
+.teacher_event_1:hover{
+    background-color: #e1875e;
+    transition: .3s;
+}
+
+.teacher_event_1 h3{
+    background-color: #E1885E;
+}
+.teacher_event_1 h4{
+    color: white;
+}
+.teacher_event_1 p{
+    color: white;
+}
+
+
+/* ° ° ° ° ° ° ° ° ° ° ° Event 2 ° ° ° ° ° ° ° ° ° ° ° */
+.teacher_event_2{
+    background-color: #535e73d6;
+    border: 4px solid  #535e73;
+}
+.teacher_event_2:hover{
+    background-color: #535e73;
+    transition: .3s;
+}
+.teacher_event_2 h3{
+    background-color: #535e73;
+}
+.teacher_event_2 h4{
+    color: white;
+}
+
+.teacher_event_2 p{
+    color: white;
+}
+
+
+
