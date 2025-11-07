@@ -1,0 +1,49 @@
+.pending_requests_skeleton {
+    width: 100%;
+    display: flex;
+    overflow-x: hiden;
+    overflow-y: hidden;
+    box-sizing: border-box;
+    gap: .5rem;
+    padding: .5rem;
+}
+
+.teacher_event_card {
+    width: calc(clamp(10rem, 28vh, 25vh) - 2.5rem);
+    height: calc(clamp(10rem, 28vh, 30vh) - 2.5rem);
+    flex-shrink: 0;
+    border-radius: 8px;
+    background-color: #dbdbdb;
+    position: relative;
+    overflow: hidden;
+    cursor: default; 
+    border: none;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+}
+
+/* Animación de shimmer */
+.teacher_event_card::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -150%;
+    height: 100%;
+    width: 150%;
+    background: linear-gradient(
+        90deg, 
+        rgba(255, 255, 255, 0) 0%, 
+        rgba(255, 255, 255, 0.4) 50%, 
+        rgba(255, 255, 255, 0) 100%
+    );
+    animation: loadingShimmer 1.5s infinite;
+    border-radius: 8px;
+}
+
+@keyframes loadingShimmer {
+    0% {
+        left: -150%;
+    }
+    100% {
+        left: 100%;
+    }
+}
