@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import Styles from "./AttendanceCalendar.module.css";
-import { fetchAttendanceData, fechtSchedule } from "./attendanceData.js";
+import { fetchAttendanceData, fechtSchedule , changeAttendanceStatus} from "./attendanceData.js";
 
 const STATUS = {
   1: { label: "Justificado", color: "#e86666ff" },
@@ -48,6 +48,7 @@ export default function AttendanceCalendar({ isAdmin = true, teacherId }) {
       mounted = false;
     };
   }, [teacherId]);
+
       useEffect(() => {
       let mounted = true;
       const load = async () => {
@@ -70,7 +71,7 @@ export default function AttendanceCalendar({ isAdmin = true, teacherId }) {
         mounted = false;
       };
     }, [teacherId]);
-    
+
   const monthName = new Date(year, month - 1).toLocaleString("es-ES", {
     month: "long",
     year: "numeric",
@@ -113,20 +114,43 @@ export default function AttendanceCalendar({ isAdmin = true, teacherId }) {
     setMenu(null);
   };
 
-  const changeStatus = (estado) => {
+  const changeStatus = async (estado) => {
     if (!menu) return;
     const { date } = menu;
-    setData((prev) => {
-      const exists = prev.some((d) => d.fecha === date);
+
+    if (!teacherId) {
+      console.error('changeStatus: missing teacherId');
+      return;
+    }
+
+    // snapshot previous data to allow rollback on failure
+    const prevData = data;
+
+    // optimistic update
+    const newData = (() => {
+      const exists = prevData.some((d) => d.fecha === date);
       return exists
-        ? prev.map((d) => (d.fecha === date ? { ...d, estado } : d))
-        : [...prev, { fecha: date, estado }];
-    });
+        ? prevData.map((d) => (d.fecha === date ? { ...d, estado } : d))
+        : [...prevData, { fecha: date, estado }];
+    })();
+
+    setData(newData);
     setMenu(null);
+
+    try {
+      // persist change to backend
+      await changeAttendanceStatus(teacherId, date, estado);
+    } catch (err) {
+      console.error('Failed to persist attendance change:', err);
+      // rollback UI
+      setData(prevData);
+      // optionally re-open menu to allow retry
+      setMenu({ date, selected: prevData.find((d) => d.fecha === date)?.estado ?? null, top: menu?.top, left: menu?.left });
+    }
   };
 
   const handleDayClick = (e, cell) => {
-    if (!isAdmin || !cell || !cell.hasClass) return; // 🚫 no permitir clic si no hay clase
+    if (!isAdmin || !cell || !cell.hasClass) return; 
     const grid = gridRef.current.getBoundingClientRect();
     const rect = e.currentTarget.getBoundingClientRect();
     setMenu({
@@ -212,7 +236,7 @@ export default function AttendanceCalendar({ isAdmin = true, teacherId }) {
           <h4>{menu.date}</h4>
           {Object.entries(STATUS).map(([num, s]) => (
             <button
-              key={num}
+              key={`status-${num}`}
               onClick={() => changeStatus(Number(num))}
               className={Styles.menuBtn}
               style={{ background: s.color }}
