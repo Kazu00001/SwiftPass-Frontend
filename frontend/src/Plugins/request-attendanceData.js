@@ -30,8 +30,15 @@ export const httpclientplugin_requestAttendanceData = {
     post: async (u) => {
         throw new Error('Not implemented');
     },
-    put: async (attendanceData) => {
-       throw new Error('Not implemented');
+    put_changeDayStatus: async (url,body) => {
+        try {
+            const response = await axios.put(url, body); 
+            return response.data;
+
+        } catch (error) {
+            console.error('Error updating attendance data:', error);
+            throw error;
+        }
     },
      delete: async (attendanceData) => {
        throw new Error('Not implemented');

@@ -22,6 +22,18 @@ export const fechtSchedule = async (teacherId) => {
     return {};
   }
 }
+export const changeAttendanceStatus = async (teacherId, date, status) => {
+  try {
+    console.log(teacherId, date, status); 
+    const url= `${API_URL}/api/teachers/admin/update-day-profile`;
+    const body = {teacherId:teacherId, date:date , status:status};
+    const response = await httpclientplugin_requestAttendanceData.put_changeDayStatus(url, body);
+    return response;
+  } catch (error) {
+    console.error('Error changing attendance status:', error);
+    throw error;
+  }
+}
 
 // export const schedule = {
 //   monday: [
