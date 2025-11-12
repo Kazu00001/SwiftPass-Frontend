@@ -1,17 +1,23 @@
 import React from 'react';
 import Styles from './NavBar.module.css';
 import TeacherSearchModal from '../TeacherSearchModal';
+import RequestSearchModal from '../RequestSearchModal'
 
 const searchIcon = '/Graphics/icons/lupaW.png';
 const reportIcon = '/Graphics/icons/reports.png';
 const notiIcon = '/Graphics/icons/noti.png';
+const requestIcon = '/Graphics/icons/circle.png'
 
 const NavBar = () => {
     const [isModalOpen, setIsModalOpen] = React.useState(false);
+    const [isRequestModalOpen, setIsRequestModalOpen] = React.useState(false);
     const [selectedButton, setSelectedButton] = React.useState(null);
 
     const handleSearchClick = () => {
         setIsModalOpen(true);
+    };
+    const handleSearchRequestClick = () => {
+        setIsRequestModalOpen(true);
     };
 
     return (
@@ -33,8 +39,15 @@ const NavBar = () => {
                         setSelectedButton={setSelectedButton} 
                     />
                     <NavButton 
+                        Click={handleSearchRequestClick}
                         name="Pendientes" 
                         icon={notiIcon} 
+                        selectedButton={selectedButton} 
+                        setSelectedButton={setSelectedButton} 
+                    />
+                    <NavButton 
+                        name="Justificar" 
+                        icon={requestIcon} 
                         selectedButton={selectedButton} 
                         setSelectedButton={setSelectedButton} 
                     />
@@ -52,7 +65,14 @@ const NavBar = () => {
                 isOpen={isModalOpen} 
                 onClose={() => {setIsModalOpen(false); selectedButton !== 'Buscar' ? setSelectedButton(selectedButton) : setSelectedButton(null);}} 
                 selectedButton={selectedButton} 
-                setSelectedButton={setSelectedButton}/>
+                setSelectedButton={setSelectedButton}
+            />
+            <RequestSearchModal 
+                isOpen={isRequestModalOpen} 
+                onClose={() => {setIsRequestModalOpen(false); selectedButton !== 'Pendientes' ? setSelectedButton(selectedButton) : setSelectedButton(null);}} 
+                selectedButton={selectedButton} 
+                setSelectedButton={setSelectedButton}
+            />
         </>
     );
 };

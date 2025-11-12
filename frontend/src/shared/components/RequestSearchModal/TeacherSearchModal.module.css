@@ -64,6 +64,7 @@
 
 .modal_header h2 {
 	margin: 0;
+	margin-right: 1rem;
 	padding: 0;
 	font-family: "Poppins", sans-serif;
 	font-size: 1.2rem;
@@ -103,6 +104,27 @@
 	box-sizing: border-box;
 	padding-left: 2rem;
 	padding-right: 1rem;
+}
+
+.pending_requests_button {
+	margin-right: 0.5rem;
+	padding: 0.2rem 0.6rem;
+	background-color: white;
+	color: #333333;
+	border: 2px solid #535e73;
+	border-radius: 100px;
+	cursor: pointer;
+	font-family: "Poppins", sans-serif;
+	font-size: 0.7rem;
+	font-weight: 500;
+	user-select: none;
+
+	white-space: nowrap;
+}
+
+.pending_requests_button_active {
+	background-color: #535e73;
+	color: white;
 }
 
 .modal_results {
