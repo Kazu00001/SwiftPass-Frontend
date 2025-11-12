@@ -1,0 +1,36 @@
+.clock_card {
+    flex-grow: 1;
+    height: clamp(9rem, 25vh, 20rem);
+    background: linear-gradient(to right, #2F3243, #4f4f6b);
+    border-radius: 8px;
+    padding: 16px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    box-sizing: border-box;
+    padding: 1rem;
+    padding-left: 2rem;
+    color: white;
+    align-content: center;
+    position: relative;
+}
+
+.clock_time{
+    font-size: 3.2rem;
+    font-weight: bold;
+    font-family: 'Poppins', sans-serif;
+    margin: 0 0 .5rem 0;
+}
+
+.clock_date {
+    font-size: 1.2rem;
+    font-weight: normal;
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+}
+
+.clock_image{
+    position: absolute;
+    bottom: 0;
+    right: 2rem;
+    height: clamp(10rem, 28vh, 20rem);
+    user-select: none;
+}
