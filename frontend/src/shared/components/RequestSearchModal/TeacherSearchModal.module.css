@@ -62,19 +62,25 @@
 	border-bottom: 3px solid #e0e0e0;
 }
 
-.modal_header h2 {
+.tab_button {
 	margin: 0;
-	margin-right: 1rem;
+	height: 100%;
 	padding: 0;
 	font-family: "Poppins", sans-serif;
 	font-size: 1.2rem;
 	color: #333333;
 	display: flex;
 	align-items: center;
-	padding-left: 1rem;
+	padding: 1rem;
 	font-size: 1.2rem;
 	font-weight: 400;
-	box-sizing: border-box;
+	background: none;
+	border: none;
+	cursor: pointer;
+}
+.active_section {
+	border-bottom: 4px solid #535e73;
+	color: #535e73;
 }
 
 .close_button {
@@ -94,6 +100,8 @@
 	width: calc(100% - 2rem);
 	height: 2.3rem;
 	margin: 1rem;
+	display: flex;
+	align-items: center;
 }
 
 .search-input {
@@ -105,7 +113,15 @@
 	padding-left: 2rem;
 	padding-right: 1rem;
 }
-
+.search-icon {
+	width: 1.2rem;
+	height: 1.2rem;
+	position: absolute;
+	margin-left: 0.5rem;
+	pointer-events: none;
+	user-select: none;
+	opacity: 0.6;
+}
 .pending_requests_button {
 	margin-right: 0.5rem;
 	padding: 0.2rem 0.6rem;
@@ -127,6 +143,12 @@
 	color: white;
 }
 
+.filters_container {
+	width: 100%;
+	display: flex;
+	margin-left: 1rem;
+	padding-bottom: 0.5rem;
+}
 .modal_results {
 	width: 100%;
 	height: calc(100% - 7.5rem);

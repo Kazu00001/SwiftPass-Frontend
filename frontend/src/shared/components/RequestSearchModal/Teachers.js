@@ -1,144 +1,184 @@
 export const TEACHERS = [
-  {
-    "id": "T001",
-    "name": "Dr. Evelyn Reed",
-    "photo": "https://randomuser.me/api/portraits/women/1.jpg",
-    "time": "07:58",
-    "status": 1
-  },
-  {
-    "id": "T002",
-    "name": "Mr. Samuel Carter",
-    "photo": "https://randomuser.me/api/portraits/men/2.jpg",
-    "time": "08:10",
-    "status": 2
-  },
-  {
-    "id": "T003",
-    "name": "Ms. Olivia Chen",
-    "photo": "https://randomuser.me/api/portraits/women/3.jpg",
-    "time": "07:45",
-    "status": 1
-  },
-  {
-    "id": "T004",
-    "name": "Mr. Benjamin Grant",
-    "photo": "https://randomuser.me/api/portraits/men/4.jpg",
-    "time": null,
-    "status": 1
-  },
-  {
-    "id": "T005",
-    "name": "Mrs. Chloe Patel",
-    "photo": "https://randomuser.me/api/portraits/women/5.jpg",
-    "time": "08:02",
-    "status": 2
-  },
-  {
-    "id": "T006",
-    "name": "Mr. David Rodriguez",
-    "photo": "https://randomuser.me/api/portraits/men/6.jpg",
-    "time": "07:55",
-    "status": 1
-  },
-  {
-    "id": "T007",
-    "name": "Dr. Sophia Miller",
-    "photo": "https://randomuser.me/api/portraits/women/7.jpg",
-    "time": "07:59",
-    "status": 1
-  },
-  {
-    "id": "T008",
-    "name": "Mr. Isaac Flores",
-    "photo": "https://randomuser.me/api/portraits/men/8.jpg",
-    "time": null,
-    "status": 1
-  },
-  {
-    "id": "T009",
-    "name": "Ms. Ava Kim",
-    "photo": "https://randomuser.me/api/portraits/women/9.jpg",
-    "time": "08:15",
-    "status": 2
-  },
-  {
-    "id": "T010",
-    "name": "Mr. Jordan Hughes",
-    "photo": "https://randomuser.me/api/portraits/men/10.jpg",
-    "time": "07:50",
-    "status": 1
-  },
-  {
-    "id": "T011",
-    "name": "Dr. Evelyn Reed",
-    "photo": "https://randomuser.me/api/portraits/women/1.jpg",
-    "time": "07:58",
-    "status": 1
-  },
-  {
-    "id": "T012",
-    "name": "Mr. Samuel Carter",
-    "photo": "https://randomuser.me/api/portraits/men/2.jpg",
-    "time": "08:10",
-    "status": 2
-  },
-  {
-    "id": "T013",
-    "name": "Ms. Olivia Chen",
-    "photo": "https://randomuser.me/api/portraits/women/3.jpg",
-    "time": "07:45",
-    "status": 1
-  },
-  {
-    "id": "T014",
-    "name": "Mr. Benjamin Grant",
-    "photo": "https://randomuser.me/api/portraits/men/4.jpg",
-    "time": null,
-    "status": 1
-  },
-  {
-    "id": "T015",
-    "name": "Mrs. Chloe Patel",
-    "photo": "https://randomuser.me/api/portraits/women/5.jpg",
-    "time": "08:02",
-    "status": 2
-  },
-  {
-    "id": "T016",
-    "name": "Mr. David Rodriguez",
-    "photo": "https://randomuser.me/api/portraits/men/6.jpg",
-    "time": "07:55",
-    "status": 1
-  },
-  {
-    "id": "T017",
-    "name": "Dr. Sophia Miller",
-    "photo": "https://randomuser.me/api/portraits/women/7.jpg",
-    "time": "07:59",
-    "status": 1
-  },
-  {
-    "id": "T018",
-    "name": "Mr. Isaac Flores",
-    "photo": "https://randomuser.me/api/portraits/men/8.jpg",
-    "time": null,
-    "status": 1
-  },
-  {
-    "id": "T019",
-    "name": "Ms. Ava Kim",
-    "photo": "https://randomuser.me/api/portraits/women/9.jpg",
-    "time": "08:15",
-    "status": 2
-  },
-  {
-    "id": "T020",
-    "name": "Mr. Jordan Hughes",
-    "photo": "https://randomuser.me/api/portraits/men/10.jpg",
-    "time": "07:50",
-    "status": 1
-  }
+	{
+		id: "T001",
+		name: "Dr. Evelyn Reed",
+		photo: "https://randomuser.me/api/portraits/women/1.jpg",
+		time: "07:58",
+		status: 2,
+		isPending: false,
+		date: "2025-10-25",
+	},
+	{
+		id: "T002",
+		name: "Mr. Samuel Carter",
+		photo: "https://randomuser.me/api/portraits/men/2.jpg",
+		time: "08:10",
+		status: 2,
+		isPending: true,
+		date: "2025-10-26",
+	},
+	{
+		id: "T003",
+		name: "Ms. Olivia Chen",
+		photo: "https://randomuser.me/api/portraits/women/3.jpg",
+		time: "07:45",
+		status: 1,
+		isPending: false,
+		date: "2025-10-27",
+	},
+	{
+		id: "T004",
+		name: "Mr. Benjamin Grant",
+		photo: "https://randomuser.me/api/portraits/men/4.jpg",
+		time: null,
+		status: 1,
+		isPending: true,
+		date: "2025-10-28",
+	},
+	{
+		id: "T005",
+		name: "Mrs. Chloe Patel",
+		photo: "https://randomuser.me/api/portraits/women/5.jpg",
+		time: "08:02",
+		status: 2,
+		isPending: true,
+		date: "2025-10-29",
+	},
+	{
+		id: "T006",
+		name: "Mr. David Rodriguez",
+		photo: "https://randomuser.me/api/portraits/men/6.jpg",
+		time: "07:55",
+		status: 1,
+		isPending: false,
+		date: "2025-10-30",
+	},
+	{
+		id: "T007",
+		name: "Dr. Sophia Miller",
+		photo: "https://randomuser.me/api/portraits/women/7.jpg",
+		time: "07:59",
+		status: 1,
+		isPending: false,
+		date: "2025-10-31",
+	},
+	{
+		id: "T008",
+		name: "Mr. Isaac Flores",
+		photo: "https://randomuser.me/api/portraits/men/8.jpg",
+		time: null,
+		status: 1,
+		isPending: true,
+		date: "2025-11-01",
+	},
+	{
+		id: "T009",
+		name: "Ms. Ava Kim",
+		photo: "https://randomuser.me/api/portraits/women/9.jpg",
+		time: "08:15",
+		status: 2,
+		isPending: true,
+		date: "2025-11-02",
+	},
+	{
+		id: "T010",
+		name: "Mr. Jordan Hughes",
+		photo: "https://randomuser.me/api/portraits/men/10.jpg",
+		time: "07:50",
+		status: 1,
+		isPending: false,
+		date: "2025-11-03",
+	},
+	{
+		id: "T011",
+		name: "Dr. Evelyn Reed",
+		photo: "https://randomuser.me/api/portraits/women/1.jpg",
+		time: "07:58",
+		status: 2,
+		isPending: false,
+		date: "2025-11-04",
+	},
+	{
+		id: "T012",
+		name: "Mr. Samuel Carter",
+		photo: "https://randomuser.me/api/portraits/men/2.jpg",
+		time: "08:10",
+		status: 2,
+		isPending: true,
+		date: "2025-11-05",
+	},
+	{
+		id: "T013",
+		name: "Ms. Olivia Chen",
+		photo: "https://randomuser.me/api/portraits/women/3.jpg",
+		time: "07:45",
+		status: 1,
+		isPending: false,
+		date: "2025-11-06",
+	},
+	{
+		id: "T014",
+		name: "Mr. Benjamin Grant",
+		photo: "https://randomuser.me/api/portraits/men/4.jpg",
+		time: null,
+		status: 1,
+		isPending: true,
+		date: "2025-11-07",
+	},
+	{
+		id: "T015",
+		name: "Mrs. Chloe Patel",
+		photo: "https://randomuser.me/api/portraits/women/5.jpg",
+		time: "08:02",
+		status: 2,
+		isPending: true,
+		date: "2025-11-08",
+	},
+	{
+		id: "T016",
+		name: "Mr. David Rodriguez",
+		photo: "https://randomuser.me/api/portraits/men/6.jpg",
+		time: "07:55",
+		status: 1,
+		isPending: false,
+		date: "2025-11-09",
+	},
+	{
+		id: "T017",
+		name: "Dr. Sophia Miller",
+		photo: "https://randomuser.me/api/portraits/women/7.jpg",
+		time: "07:59",
+		status: 1,
+		isPending: false,
+		date: "2025-11-10",
+	},
+	{
+		id: "T018",
+		name: "Mr. Isaac Flores",
+		photo: "https://randomuser.me/api/portraits/men/8.jpg",
+		time: null,
+		status: 1,
+		isPending: true,
+		date: "2025-11-11",
+	},
+	{
+		id: "T019",
+		name: "Ms. Ava Kim",
+		photo: "https://randomuser.me/api/portraits/women/9.jpg",
+		time: "08:15",
+		status: 2,
+		isPending: true,
+		date: "2025-11-12",
+	},
+	{
+		id: "T020",
+		name: "Mr. Jordan Hughes",
+		photo: "https://randomuser.me/api/portraits/men/10.jpg",
+		time: "07:50",
+		status: 2,
+		isPending: false,
+		date: "2025-11-13",
+	},
 ];
 
 export default TEACHERS;
