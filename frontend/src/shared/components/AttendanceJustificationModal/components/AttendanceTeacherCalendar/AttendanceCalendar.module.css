@@ -1,0 +1,210 @@
+/* ---------- Contenedor principal ---------- */
+.wrapper {
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+	height: 100%;
+	background: #ffffff;
+	color: #374151;
+	border-radius: 12px;
+	padding: 1rem;
+	box-sizing: border-box;
+	overflow: hidden;
+	font-family: Poppins, system-ui, sans-serif;
+}
+
+/* ---------- Encabezado ---------- */
+.header {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	gap: 0.5rem;
+}
+
+.month {
+	text-transform: capitalize;
+	font-size: 1rem;
+	color: #1f2937;
+}
+
+.nav {
+	display: flex;
+	height: 2rem;
+	border-radius: 6px;
+	overflow: hidden;
+	margin-left: 10px;
+}
+
+.nav button {
+	flex: 1;
+	background: #374151;
+	color: white;
+	border: none;
+	cursor: pointer;
+	font-size: 0.9rem;
+	transition: background 0.2s ease;
+}
+
+.nav button:hover {
+	background: #4b5563;
+}
+
+/* ---------- Leyenda ---------- */
+.legend {
+	display: flex;
+	gap: 0.8rem;
+	justify-content: center;
+	align-items: center;
+	flex-wrap: wrap;
+	font-size: 0.85rem;
+}
+
+.legendItem {
+	display: flex;
+	align-items: center;
+	gap: 0.3rem;
+}
+
+.dot {
+	width: 0.8rem;
+	height: 0.8rem;
+	border-radius: 50%;
+}
+
+/* ---------- Días de la semana ---------- */
+.weekdays {
+	display: grid;
+	grid-template-columns: repeat(7, 1fr);
+	text-align: center;
+	margin-top: 0.8rem;
+	font-weight: 600;
+	font-size: 0.85rem;
+}
+
+.weekday {
+	text-align: center;
+	font-weight: 500;
+	padding: 6px 0;
+}
+
+.activeDay {
+	color: #1f2937;
+}
+
+.inactiveDay {
+	color: #9ca3af;
+	opacity: 0.7;
+}
+
+/* ---------- Contenedor del calendario ---------- */
+.grid {
+	display: grid;
+	grid-template-columns: repeat(7, 1fr);
+	grid-auto-rows: 1fr; /* 👈 Hace que todas las filas se ajusten al alto disponible */
+	gap: 0.4rem;
+	flex-grow: 1;
+	margin-top: 0.6rem;
+	width: 100%;
+	height: 100%;
+	box-sizing: border-box;
+	overflow: hidden;
+}
+
+/* ---------- Celdas ---------- */
+.day,
+.empty {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	border-radius: 8px;
+	font-size: 0.9rem;
+	font-weight: 500;
+	cursor: pointer;
+	transition: background 0.18s ease, transform 0.12s ease;
+	box-sizing: border-box;
+
+	/* 👇 Estas tres líneas hacen la magia */
+	width: 100%;
+	height: 100%;
+	min-height: 28px; /* Evita que se aplasten demasiado */
+}
+
+/* Días seleccionables (futuros o con estado=4) */
+.selectableDay {
+	background: #f9fafb;
+	border: 1.6px solid #1f6feb;
+	color: #1f2937;
+	cursor: pointer;
+}
+
+.selectableDay:hover {
+	background: rgba(31, 111, 235, 0.15);
+	transform: translateY(-2px);
+}
+
+/* Día seleccionado */
+.selectedDay {
+	background: #1f6feb !important;
+	color: #ffffff !important;
+	border: none !important;
+	transform: translateY(-2px);
+	box-shadow: 0 6px 14px rgba(31, 111, 235, 0.25);
+}
+
+/* Días desactivados (no seleccionables) */
+.disabledDay {
+	background: #e6e7ea;
+	color: #9aa0a6;
+	cursor: not-allowed;
+	opacity: 0.8;
+}
+
+/* Días sin clases (extra distinción visual) */
+.noClassDay {
+	background: #f3f4f6;
+	color: #9ca3af;
+	cursor: not-allowed;
+	opacity: 0.6;
+}
+
+/* Hover general */
+.day:hover:not(.disabledDay):not(.selectedDay) {
+	transform: scale(1.04);
+}
+
+/* ---------- Botones de modo (Justificación / Permiso) ---------- */
+.modeButtons {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	gap: 1rem;
+	margin-top: 1rem;
+	margin-bottom: 0.5rem;
+	background-color: black;
+}
+
+.modeButton {
+	margin-right: 0.5rem;
+	padding: 0.2rem 0.6rem;
+	background-color: white;
+	color: #333333;
+	border: 2px solid #535e73;
+	border-radius: 100px;
+	cursor: pointer;
+	font-family: "Poppins", sans-serif;
+	font-size: 0.7rem;
+	font-weight: 500;
+	user-select: none;
+	height: 1.5rem;
+	white-space: nowrap;
+}
+
+.activeMode {
+	background: #535e73;
+	color: white;
+}
+
+.actions {
+	display: flex;
+	align-items: center;
+}
