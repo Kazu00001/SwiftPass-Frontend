@@ -5,6 +5,7 @@ import {
 	fechtSchedule,
 	changeAttendanceStatus,
 } from "./attendanceData.js";
+import { getTeacherIdFromToken } from "../../../../../utils/Auth";
 
 const STATUS = {
 	1: { label: "Justificado", color: "#e86666ff" },
@@ -30,6 +31,9 @@ const DAYS_MAP = [
 
 export default function AttendanceCalendar({ isAdmin = true, teacherId }) {
 	const today = new Date();
+
+	// si no se pasa teacherId como prop, intentamos extraerlo del JWT
+	const resolvedTeacherId = teacherId ?? getTeacherIdFromToken();
 	const [year, setYear] = useState(today.getFullYear());
 	const [month, setMonth] = useState(today.getMonth() + 1);
 	// const [data, setData] = useState(attendanceData);
@@ -42,10 +46,10 @@ export default function AttendanceCalendar({ isAdmin = true, teacherId }) {
 	useEffect(() => {
 		let mounted = true;
 		const load = async () => {
-			if (!teacherId) return;
+			if (!resolvedTeacherId) return;
 			setLoading(true);
 			try {
-				const res = await fetchAttendanceData(teacherId);
+				const res = await fetchAttendanceData(resolvedTeacherId);
 				if (!mounted) return;
 				setData(Array.isArray(res) ? res : []);
 			} catch (err) {
@@ -60,15 +64,15 @@ export default function AttendanceCalendar({ isAdmin = true, teacherId }) {
 		return () => {
 			mounted = false;
 		};
-	}, [teacherId]);
+	}, [resolvedTeacherId]);
 
 	useEffect(() => {
 		let mounted = true;
 		const load = async () => {
-			if (!teacherId) return;
+			if (!resolvedTeacherId) return;
 			setLoading(true);
 			try {
-				const res = await fechtSchedule(teacherId);
+				const res = await fechtSchedule(resolvedTeacherId);
 				if (!mounted) return;
 				setSchedule(res);
 			} catch (err) {
@@ -83,7 +87,7 @@ export default function AttendanceCalendar({ isAdmin = true, teacherId }) {
 		return () => {
 			mounted = false;
 		};
-	}, [teacherId]);
+	}, [resolvedTeacherId]);
 
 	const monthName = new Date(year, month - 1).toLocaleString("es-ES", {
 		month: "long",
@@ -137,7 +141,7 @@ export default function AttendanceCalendar({ isAdmin = true, teacherId }) {
 		if (!menu) return;
 		const { date } = menu;
 
-		if (!teacherId) {
+		if (!resolvedTeacherId) {
 			console.error("changeStatus: missing teacherId");
 			return;
 		}
@@ -158,7 +162,7 @@ export default function AttendanceCalendar({ isAdmin = true, teacherId }) {
 
 		try {
 			// persist change to backend
-			await changeAttendanceStatus(teacherId, date, estado);
+			await changeAttendanceStatus(resolvedTeacherId, date, estado);
 		} catch (err) {
 			console.error("Failed to persist attendance change:", err);
 			// rollback UI

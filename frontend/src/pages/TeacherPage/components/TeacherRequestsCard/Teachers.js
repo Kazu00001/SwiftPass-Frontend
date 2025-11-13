@@ -1,159 +1,21 @@
 import axios from 'axios';
 import { httpclientplugin_requestTeacher } from '../../../../Plugins/index.js';
+import { ID_TEACHER } from '../../../../utils/env.js';  
 ;
 
-// export const TEACHERS = [
-//   {
-//     "id": "T001",
-//     "name": "Dr. Evelyn Reed",
-//     "photo": "https://randomuser.me/api/portraits/women/1.jpg",
-//     "time": "07:58",
-//     "status": 1
-//   },
-//   {
-//     "id": "T002",
-//     "name": "Mr. Samuel Carter",
-//     "photo": "https://randomuser.me/api/portraits/men/2.jpg",
-//     "time": "08:10",
-//     "status": 2
-//   },
-//   {
-//     "id": "T003",
-//     "name": "Ms. Olivia Chen",
-//     "photo": "https://randomuser.me/api/portraits/women/3.jpg",
-//     "time": "07:45",
-//     "status": 1
-//   },
-//   {
-//     "id": "T004",
-//     "name": "Mr. Benjamin Grant",
-//     "photo": "https://randomuser.me/api/portraits/men/4.jpg",
-//     "time": null,
-//     "status": 1
-//   },
-//   {
-//     "id": "T005",
-//     "name": "Mrs. Chloe Patel",
-//     "photo": "https://randomuser.me/api/portraits/women/5.jpg",
-//     "time": "08:02",
-//     "status": 2
-//   },
-//   {
-//     "id": "T006",
-//     "name": "Mr. David Rodriguez",
-//     "photo": "https://randomuser.me/api/portraits/men/6.jpg",
-//     "time": "07:55",
-//     "status": 1
-//   },
-//   {
-//     "id": "T007",
-//     "name": "Dr. Sophia Miller",
-//     "photo": "https://randomuser.me/api/portraits/women/7.jpg",
-//     "time": "07:59",
-//     "status": 1
-//   },
-//   {
-//     "id": "T008",
-//     "name": "Mr. Isaac Flores",
-//     "photo": "https://randomuser.me/api/portraits/men/8.jpg",
-//     "time": null,
-//     "status": 1
-//   },
-//   {
-//     "id": "T009",
-//     "name": "Ms. Ava Kim",
-//     "photo": "https://randomuser.me/api/portraits/women/9.jpg",
-//     "time": "08:15",
-//     "status": 2
-//   },
-//   {
-//     "id": "T010",
-//     "name": "Mr. Jordan Hughes",
-//     "photo": "https://randomuser.me/api/portraits/men/10.jpg",
-//     "time": "07:50",
-//     "status": 1
-//   },
-//   {
-//     "id": "T011",
-//     "name": "Dr. Evelyn Reed",
-//     "photo": "https://randomuser.me/api/portraits/women/1.jpg",
-//     "time": "07:58",
-//     "status": 1
-//   },
-//   {
-//     "id": "T012",
-//     "name": "Mr. Samuel Carter",
-//     "photo": "https://randomuser.me/api/portraits/men/2.jpg",
-//     "time": "08:10",
-//     "status": 2
-//   },
-//   {
-//     "id": "T013",
-//     "name": "Ms. Olivia Chen",
-//     "photo": "https://randomuser.me/api/portraits/women/3.jpg",
-//     "time": "07:45",
-//     "status": 1
-//   },
-//   {
-//     "id": "T014",
-//     "name": "Mr. Benjamin Grant",
-//     "photo": "https://randomuser.me/api/portraits/men/4.jpg",
-//     "time": null,
-//     "status": 1
-//   },
-//   {
-//     "id": "T015",
-//     "name": "Mrs. Chloe Patel",
-//     "photo": "https://randomuser.me/api/portraits/women/5.jpg",
-//     "time": "08:02",
-//     "status": 2
-//   },
-//   {
-//     "id": "T016",
-//     "name": "Mr. David Rodriguez",
-//     "photo": "https://randomuser.me/api/portraits/men/6.jpg",
-//     "time": "07:55",
-//     "status": 1
-//   },
-//   {
-//     "id": "T017",
-//     "name": "Dr. Sophia Miller",
-//     "photo": "https://randomuser.me/api/portraits/women/7.jpg",
-//     "time": "07:59",
-//     "status": 1
-//   },
-//   {
-//     "id": "T018",
-//     "name": "Mr. Isaac Flores",
-//     "photo": "https://randomuser.me/api/portraits/men/8.jpg",
-//     "time": null,
-//     "status": 1
-//   },
-//   {
-//     "id": "T019",
-//     "name": "Ms. Ava Kim",
-//     "photo": "https://randomuser.me/api/portraits/women/9.jpg",
-//     "time": "08:15",
-//     "status": 2
-//   },
-//   {
-//     "id": "T020",
-//     "name": "Mr. Jordan Hughes",
-//     "photo": "https://randomuser.me/api/portraits/men/10.jpg",
-//     "time": "07:50",
-//     "status": 1
-//   }
-// ];
+
 export const fetchTeachers = async () => {
+  console.log("Fetching teachers for ID_TEACHER:", ID_TEACHER);
   try {
-    const url= 'http://localhost:3000/api/teachers';
-    const teachers = await httpclientplugin_requestTeacher.get(url);
+    const url= `http://localhost:3000/api/teachers/${ID_TEACHER}/listar-permisos-justificantes`;
+    const teachers = await httpclientplugin_requestTeacher.get_teacher_permissions_and_justi(url);
+
     return teachers;
   } catch (error) {
     console.error('Error fetching teachers:', error);
     return [];
   }
 }
-export const TEACHERS = await fetchTeachers(); 
+// Preferir cargar los profesores desde los componentes (useEffect) usando fetchTeachers().
+// Evitamos top-level await para prevenir problemas de orden de evaluación o ciclos de importación.
 
-console.log(TEACHERS);  

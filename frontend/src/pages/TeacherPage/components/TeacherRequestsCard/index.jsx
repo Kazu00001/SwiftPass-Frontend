@@ -1,6 +1,6 @@
 import Styles from './PendingRequestsCard.module.css';
 import { useState, useEffect } from 'react';
-import { TEACHERS } from './Teachers.js';
+import { fetchTeachers } from './Teachers.js';
 import TeacherEventCard from '../TeacherEventCard';
 import EmptyBox from '../EmptyBox/index.jsx';
 import PendingRequestsSkeleton from '../PendingRequestsSkeleton/index.jsx';
@@ -9,19 +9,37 @@ export default function TeacherRequestsCard() {
     const [activeTab, setActiveTab] = useState(['Todos', 0]);
     const [isReversed, setIsReversed] = useState(false);
 
-    const [isLoading, setIsLoading] = useState(true); 
+    const [isLoading, setIsLoading] = useState(true);
+    const [teachers, setTeachers] = useState([]);
 
     useEffect(() => {
-        const timer = setTimeout(() => setIsLoading(false), 3000);
-        return () => clearTimeout(timer);
+        let mounted = true;
+        const load = async () => {
+            setIsLoading(true);
+            try {
+                const t = await fetchTeachers();
+                if (!mounted) return;
+                setTeachers(Array.isArray(t) ? t : []);
+            } catch (err) {
+                console.error('TeacherRequestsCard: failed to load teachers', err);
+                if (mounted) setTeachers([]);
+            } finally {
+                if (mounted) setIsLoading(false);
+            }
+        };
+        load();
+        return () => {
+            mounted = false;
+        };
     }, []);
 
+
     const filteredTeachers = () => {
-        let filtered = TEACHERS;
+        let filtered = teachers || [];
         if (activeTab[0] === 'Justificaciones') {
-            filtered = TEACHERS.filter(teacher => teacher.status === 1);
+            filtered = filtered.filter((teacher) => teacher.status === 1);
         } else if (activeTab[0] === 'Permisos') {
-            filtered = TEACHERS.filter(teacher => teacher.status === 2);
+            filtered = filtered.filter((teacher) => teacher.status === 2);
         }
         return isReversed ? filtered.slice().reverse() : filtered;
     };
@@ -52,17 +70,20 @@ export default function TeacherRequestsCard() {
         ) : (
             <section className={Styles['pending_requests_body']}>
             {
-                filteredTeachers().length === 0
-                ? <EmptyBox />
-                : filteredTeachers().map(teacher => (
-                    <TeacherEventCard 
-                        key={teacher.id} 
-                        name={teacher.name} 
-                        photo={teacher.photo} 
-                        status={teacher.status}
-                        time={teacher.time} 
-                    />
-                    ))
+                // compute once and guard against undefined
+                (() => {
+                    const list = filteredTeachers() || [];
+                    if (!Array.isArray(list) || list.length === 0) return <EmptyBox />;
+                    return list.map((teacher) => (
+                        <TeacherEventCard
+                            key={teacher.id}
+                            name={teacher.name}
+                            photo={teacher.photo}
+                            status={teacher.status}
+                            time={teacher.time}
+                        />
+                    ));
+                })()
             }
             </section>
         )

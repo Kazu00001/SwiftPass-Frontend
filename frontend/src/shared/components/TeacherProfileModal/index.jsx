@@ -136,7 +136,7 @@ function TeacherCase2({ schedule, teacherId }) {
 				<AttendanceCalendar teacherId={teacherId} isAdmin={true} />
 			</div>
 			<div className={Styles["stats_main_container"]}>
-				<AttendanceStats />
+				<AttendanceStats teacherId = {teacherId} />
 				<button className={Styles["stats_history_button"]}>
 					Descargar Historial
 				</button>

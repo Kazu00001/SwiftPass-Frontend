@@ -1,17 +1,39 @@
 // AttendanceStats.jsx
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import styles from "./AttendanceStats.module.css";
-import data from "./data.js";
+import {fetchAttendanceData} from "./data.js";
 
 const STATUS_ORDER = [
-	{ key: "asistencia", label: "Asistencia", code: 3, color: "#525D73" },
+	{ key: "asistencia", label: "Asistencia", code: 4, color: "#525D73" },
 	{ key: "justificado", label: "Justificado", code: 1, color: "#E1885E" },
 	{ key: "permiso", label: "Permiso", code: 2, color: "#92CCFF" },
 	{ key: "retardo", label: "Retardo", code: 5, color: "#e5d031ff" },
-	{ key: "falta", label: "Falta", code: 4, color: "#ef4444" },
+	{ key: "falta", label: "Falta", code: 3, color: "#ef4444" },
 ];
-
 export default function AttendanceStats() {
+	const [data, setData] = useState([]);
+		const [loading, setLoading] = useState(true);
+	
+		useEffect(() => {
+			let mounted = true;
+			const load = async () => {
+				setLoading(true);
+				try {
+					const res = await fetchAttendanceData();
+					if (!mounted) return;
+					setData(Array.isArray(res) ? res : []);
+				} catch (err) {
+					console.error("AttendanceStats: failed to load data", err);
+					if (mounted) setData([]);
+				} finally {
+					if (mounted) setLoading(false);
+				}
+			};
+			load();
+			return () => {
+				mounted = false;
+			};
+		}, []);
 	const total = data.length;
 
 	// calcular counts

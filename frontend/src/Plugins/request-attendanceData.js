@@ -27,6 +27,16 @@ export const httpclientplugin_requestAttendanceData = {
             return [];
         }
     },
+    get_stats: async (url) => {
+        try {
+            const response = await axios.get(url); 
+            return response.data.statistics;
+            
+        } catch (error) {
+            console.error('Error fetching attendance stats data:', error);
+            return {};
+        }
+    },  
     post: async (u) => {
         throw new Error('Not implemented');
     },

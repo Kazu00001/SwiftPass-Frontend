@@ -1,14 +1,13 @@
-const data = [
-	// 13 asistencias (3)
-	...Array(13).fill({ status: 3 }),
-	// 3 faltas (4)
-	...Array(3).fill({ status: 4 }),
-	// 4 retardos (5)
-	...Array(4).fill({ status: 5 }),
-	// 2 justificados (1)
-	...Array(2).fill({ status: 1 }),
-	// 3 permisos (2)
-	...Array(3).fill({ status: 2 }),
-];
+import { API_URL, ID_TEACHER } from "../../../../utils/env";
+import {httpclientplugin_requestAttendanceData} from '../../../../Plugins/index.js';
 
-export default data;
+export const fetchAttendanceData = async() =>{
+	try {
+		const url= `${API_URL}/api/teachers/${ID_TEACHER}/estadistica-asistencias`;
+		const attendanceStats = await httpclientplugin_requestAttendanceData.get_stats(url);
+		return attendanceStats;
+		
+	} catch (error) {
+		
+	}
+}

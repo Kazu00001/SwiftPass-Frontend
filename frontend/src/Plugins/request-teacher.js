@@ -10,6 +10,15 @@ export const httpclientplugin_requestTeacher = {
             return [];
         }
     },
+    get_teacher_permissions_and_justi: async (url) => {
+        try {
+            const response = await axios.get(url);
+            return response.data.records.list;
+        } catch (error) {
+            console.error('Error fetching teacher permissions:', error);
+            return {};
+        }
+    },
     post: async (u) => {
         throw new Error('Not implemented');
     },

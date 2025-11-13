@@ -1,12 +1,13 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Styles from "./AttendanceCalendar.module.css";
-import { attendanceData, schedule } from "./attendanceData.js";
+import { fetchAttendanceData, fechtSchedule } from "./attendanceData.js";
 
 const STATUS = {
-	0: { label: "Inasistencia", color: "#e86666ff" },
-	1: { label: "Asistencia", color: "#3b82f6" },
-	2: { label: "Retardo", color: "#ecd44dff" },
-	3: { label: "Justificado", color: "#f6a23bff" },
+	1: { label: "Justificado", color: "#e86666ff" },
+	2: { label: "Permiso", color: "#3b82f6" },
+	3: { label: "Inasistencia", color: "#ecd44dff" },
+	4: { label: "Asistencia", color: "#f6a23bff" },
+	5: { label: "Retardo", color: "#e1ec46ff" },
 };
 
 const formatDate = (y, m, d) =>
@@ -25,9 +26,53 @@ export default function AttendanceTeacherCalendar() {
 	const today = new Date();
 	const [year, setYear] = useState(today.getFullYear());
 	const [month, setMonth] = useState(today.getMonth() + 1);
-	const [data] = useState(attendanceData);
-	const [tooltip, setTooltip] = useState(null); // 👈 estado del tooltip
+	const [tooltip, setTooltip] = useState(null);
+	const [loading, setLoading] = useState(false);
 	const gridRef = useRef(null);
+	const [schedule , setSchedule] = useState([]);
+	const [attendanceData, setAttendanceData] = useState([]);
+
+
+	useEffect(() => {
+		let mounted = true;
+		const load = async () => {
+			setLoading(true);
+			try {
+				const res = await fetchAttendanceData();
+				if (!mounted) return;
+				setAttendanceData(Array.isArray(res) ? res : []);
+			} catch (err) {
+				if (!mounted) return;
+				setAttendanceData([]);
+				console.error("Error loading attendance data:", err);
+			} finally {
+				if (mounted) setLoading(false);
+			}
+		};
+		load();
+		return () => {
+			mounted = false;
+		};
+	}, []);
+
+	useEffect(() => {
+		let mounted = true;
+		const loadSchedule = async () => {
+			try {
+				const res = await fechtSchedule();
+				if (!mounted) return;
+				setSchedule(res);
+			} catch (err) {
+				if (!mounted) return;
+				setSchedule([]);
+				console.error("Error loading schedule data:", err);
+			}
+		};
+		loadSchedule();
+		return () => {
+			mounted = false;
+		};
+	}, []);		
 
 	const monthName = new Date(year, month - 1).toLocaleString("es-ES", {
 		month: "long",
@@ -42,7 +87,7 @@ export default function AttendanceTeacherCalendar() {
 
 		for (let d = 1; d <= totalDays; d++) {
 			const date = formatDate(year, month, d);
-			const record = data.find((r) => r.fecha === date);
+			const record = (attendanceData || []).find((r) => r.fecha === date);
 			const weekDay = DAYS_MAP[new Date(year, month - 1, d).getDay()];
 			const hasClass = !!schedule[weekDay] && schedule[weekDay].length > 0;
 			days.push({ day: d, date, estado: record?.estado ?? null, hasClass });

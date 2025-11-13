@@ -2,7 +2,6 @@ import Styles from './TeacherListBox.module.css';
 const userIcon = '/Graphics/icons/usuario.png';
 
 export default function TeacherListBox({ name, photo, status, time, onClick }) {
-    console.log('Status TeacherListBox for ', status); 
   return (
     <button className={Styles['teacher-list-box_container']} onClick={onClick}>
         <section className={Styles['teacher-photo_container']}>

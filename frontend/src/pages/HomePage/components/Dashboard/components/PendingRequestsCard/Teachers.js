@@ -13,5 +13,3 @@ export const fetchTeachers = async () => {
   }
 }
 export const TEACHERS = await fetchTeachers(); 
-
-console.log(TEACHERS);  
