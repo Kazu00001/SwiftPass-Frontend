@@ -9,6 +9,10 @@ import { useState } from "react";
 export default function TeacherProfileModal({ teacher, isOpen, onClose }) {
 	if (!isOpen) return null;
 
+	{
+		console.log(teacher);
+	}
+
 	const [activeCase, setActiveCase] = useState(1);
 	return (
 		<div className={Styles["modal_overlay"]}>
