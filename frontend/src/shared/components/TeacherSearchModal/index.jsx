@@ -4,6 +4,7 @@ import DefaultSearchImage from "./components/DefaultSearchImage";
 import TeacherResultBox from "./components/TeacherResultBox";
 import TeacherProfileModal from "../TeacherProfileModal";
 import TEACHERS from "./Teachers";
+const searchIcon = "/Graphics/icons/lupa.png";
 
 const TeacherSearchModal = ({ isOpen, onClose, selectedButton }) => {
 	useEffect(() => {
@@ -31,6 +32,11 @@ const TeacherSearchModal = ({ isOpen, onClose, selectedButton }) => {
 					</div>
 
 					<div className={Styles["search-bar_container"]}>
+						<img
+							src={searchIcon}
+							className={Styles["search-icon"]}
+							alt="buscar"
+						/>
 						<input
 							type="text"
 							placeholder="Search..."

@@ -9,6 +9,8 @@ const reportIcon = "/Graphics/icons/reports.png";
 const notiIcon = "/Graphics/icons/noti.png";
 const requestIcon = "/Graphics/icons/circle.png";
 
+const credencial = "admin";
+
 const NavBar = () => {
 	const [isModalOpen, setIsModalOpen] = React.useState(false);
 	const [isRequestModalOpen, setIsRequestModalOpen] = React.useState(false);
@@ -29,33 +31,46 @@ const NavBar = () => {
 			<header className={Styles["navbar_container"]}>
 				<h3 className={Styles["navbar_logo"]}>Swift Pass</h3>
 				<nav className={Styles["navbar_links"]}>
-					<NavButton
-						Click={handleSearchClick}
-						name="Buscar"
-						icon={searchIcon}
-						selectedButton={selectedButton}
-						setSelectedButton={setSelectedButton}
-					/>
-					<NavButton
-						name="Reportes"
-						icon={reportIcon}
-						selectedButton={selectedButton}
-						setSelectedButton={setSelectedButton}
-					/>
-					<NavButton
-						Click={handleSearchRequestClick}
-						name="Pendientes"
-						icon={notiIcon}
-						selectedButton={selectedButton}
-						setSelectedButton={setSelectedButton}
-					/>
-					<NavButton
-						Click={handleJustModalClick}
-						name="Justificar"
-						icon={requestIcon}
-						selectedButton={selectedButton}
-						setSelectedButton={setSelectedButton}
-					/>
+					{credencial == "admin" ? (
+						<>
+							<NavButton
+								Click={handleSearchClick}
+								name="Buscar"
+								icon={searchIcon}
+								selectedButton={selectedButton}
+								setSelectedButton={setSelectedButton}
+							/>
+							<NavButton
+								name="Reportes"
+								icon={reportIcon}
+								selectedButton={selectedButton}
+								setSelectedButton={setSelectedButton}
+							/>
+							<NavButton
+								Click={handleSearchRequestClick}
+								name="Solicitudes"
+								icon={notiIcon}
+								selectedButton={selectedButton}
+								setSelectedButton={setSelectedButton}
+							/>
+						</>
+					) : (
+						<>
+							<NavButton
+								Click={handleJustModalClick}
+								name="Justificar"
+								icon={requestIcon}
+								selectedButton={selectedButton}
+								setSelectedButton={setSelectedButton}
+							/>
+							<NavButton
+								name="Reporte"
+								icon={reportIcon}
+								selectedButton={selectedButton}
+								setSelectedButton={setSelectedButton}
+							/>
+						</>
+					)}
 				</nav>
 
 				<button className={Styles["logout_button"]}>
@@ -80,7 +95,7 @@ const NavBar = () => {
 				isOpen={isRequestModalOpen}
 				onClose={() => {
 					setIsRequestModalOpen(false);
-					selectedButton !== "Pendientes"
+					selectedButton !== "Solicitudes"
 						? setSelectedButton(selectedButton)
 						: setSelectedButton(null);
 				}}
