@@ -4,6 +4,16 @@ export const httpclientplugin_requestTeacher = {
     get: async (url) => {
         try {
             const response = await axios.get(url);
+            return response.data.pendientes;
+        } catch (error) {
+            console.error('Error fetching teachers:', error);
+            return [];
+        }
+    },
+    getList: async (url) => {
+        try {
+            const response = await axios.get(url);
+            console.log("Response from getList:", response);
             return response.data;
         } catch (error) {
             console.error('Error fetching teachers:', error);
@@ -17,6 +27,15 @@ export const httpclientplugin_requestTeacher = {
         } catch (error) {
             console.error('Error fetching teacher permissions:', error);
             return {};
+        }
+    },
+    get_list_ausent_teachers: async (url) => {
+        try {
+            const response = await axios.get(url);
+            return response.data.ausentes;
+        } catch (error) {
+            console.error('Error fetching absent teachers list:', error);
+            return [];
         }
     },
     post: async (u) => {

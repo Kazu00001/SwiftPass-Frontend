@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Styles from "./AttendanceCalendar.module.css";
-import { attendanceData, schedule } from "./attendanceData.js";
+import { fetchAttendanceData, fechtSchedule } from "./attendanceData.js";
 
 /*
   Estados en attendanceData:
@@ -25,9 +25,54 @@ const DAYS_MAP = [
 ];
 
 export default function AttendanceTeacherCalendar({
+
 	selectedDays = [],
 	onSelectionChange = () => {},
 }) {
+	const [schedule , setSchedule] = useState([]);
+	const [loading, setLoading] = useState(false);
+	useEffect(() => {
+		let mounted = true;
+		const loadSchedule = async () => {
+			try {
+				const res = await fechtSchedule();
+				if (!mounted) return;
+				setSchedule(res || {});
+			} catch (err) {
+				if (!mounted) return;
+				setSchedule({});
+				console.error("Error loading schedule data:", err);
+			}
+		};
+		loadSchedule();
+		return () => {
+			mounted = false;
+		};
+	}, []);
+	const [	attendanceData, setAttendanceData] = useState([]);
+	useEffect(() => {
+		let mounted = true;
+		const load = async () => {
+			setLoading(true);
+			try {
+				const res = await fetchAttendanceData();
+				if (!mounted) return;
+				setAttendanceData(Array.isArray(res) ? res : []);
+			} catch (err) {
+				if (!mounted) return;
+				setAttendanceData([]);
+				console.error("Error loading attendance data:", err);
+			} finally {
+				if (mounted) setLoading(false);
+			}
+		};
+		load();
+		return () => {
+			mounted = false;
+		};
+	}, []);
+	console.log("🗓️ attendanceData cargado:", attendanceData)
+	console.log("🗓️ schedule cargado:", schedule)
 	const today = new Date();
 	const todayDate = formatDate(
 		today.getFullYear(),
@@ -37,7 +82,7 @@ export default function AttendanceTeacherCalendar({
 
 	const [year, setYear] = useState(today.getFullYear());
 	const [month, setMonth] = useState(today.getMonth() + 1);
-	const [data] = useState(attendanceData);
+	const data = attendanceData || [];
 	const [mode, setMode] = useState("justificacion"); // Siempre inicia con un modo activo
 
 	useEffect(() => {
@@ -93,7 +138,7 @@ export default function AttendanceTeacherCalendar({
 	const isCellSelectable = (cell) => {
 		if (!cell || !cell.date || !cell.hasClass) return false;
 
-		if (mode === "justificacion") return cell.estado === 4;
+		if (mode === "justificacion") return cell.estado === 3;
 		if (mode === "permiso") return cell.date > todayDate;
 		return false;
 	};
@@ -184,8 +229,8 @@ export default function AttendanceTeacherCalendar({
 									? {
 											1: "Justificado",
 											2: "Permiso",
-											3: "Asistencia",
-											4: "Falta",
+											4: "Asistencia",
+											3: "Falta",
 											5: "Retardo",
 									  }[cell.estado]
 									: ""

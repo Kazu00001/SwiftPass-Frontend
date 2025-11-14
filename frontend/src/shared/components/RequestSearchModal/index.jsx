@@ -3,7 +3,7 @@ import Styles from "./TeacherSearchModal.module.css";
 import DefaultSearchImage from "./components/DefaultSearchImage";
 import TeacherResultBox from "./components/TeacherResultBox";
 import ReviewRequestModal from "../ReviewRequestModal";
-import TEACHERS from "./Teachers";
+import { fetchHistoryTeachersList } from "./Teachers";
 const searchIcon = "/Graphics/icons/lupa.png";
 
 const RequestSearchModal = ({ isOpen, onClose, selectedButton }) => {
@@ -11,6 +11,9 @@ const RequestSearchModal = ({ isOpen, onClose, selectedButton }) => {
 	const [activeTab, setActiveTab] = useState(["Todos", 0]);
 	const [isReversed, setIsReversed] = useState(false);
 	const [selectedTeacher, setSelectedTeacher] = useState(null);
+    const [query, setQuery] = useState("");
+    const [teachers, setTeachers] = useState([]);
+    const [loading, setLoading] = useState(false);
 
 	useEffect(() => {
 		if (selectedButton !== "Solicitudes" && isOpen) {
@@ -18,11 +21,31 @@ const RequestSearchModal = ({ isOpen, onClose, selectedButton }) => {
 		}
 	}, [selectedButton, isOpen, onClose]);
 
+	useEffect(() => {
+		let mounted = true;
+		const load = async () => {
+			setLoading(true);
+			try {
+				const list = await fetchHistoryTeachersList();
+				if (!mounted) return;
+				setTeachers(Array.isArray(list) ? list : []);
+			} catch (err) {
+				console.error('RequestSearchModal: failed to load teachers', err);
+				if (mounted) setTeachers([]);
+			} finally {
+				if (mounted) setLoading(false);
+			}
+		};
+		load();
+		return () => (mounted = false);
+	}, []);
+
 	const handleOpenModal = (teacher) => setSelectedTeacher(teacher);
 	const handleCloseModal = () => setSelectedTeacher(null);
 
 	const filteredTeachers = (section) => {
-		let filtered = TEACHERS.filter((t) =>
+		const q = (query || "").trim().toLowerCase();
+		let filtered = (teachers || []).filter((t) =>
 			section === "Pendientes" ? t.isPending : !t.isPending
 		);
 
@@ -30,6 +53,15 @@ const RequestSearchModal = ({ isOpen, onClose, selectedButton }) => {
 			filtered = filtered.filter((t) => t.status === 1);
 		} else if (activeTab[0] === "Permisos") {
 			filtered = filtered.filter((t) => t.status === 2);
+		}
+
+		if (q) {
+			filtered = filtered.filter((t) => {
+				const name = String(t.name ?? "").toLowerCase();
+				const id = String(t.id ?? "").toLowerCase();
+				const email = String(t.email ?? "").toLowerCase();
+				return name.includes(q) || id.includes(q) || email.includes(q);
+			});
 		}
 
 		return isReversed ? filtered.slice().reverse() : filtered;
@@ -77,6 +109,9 @@ const RequestSearchModal = ({ isOpen, onClose, selectedButton }) => {
 							setIsReversed={setIsReversed}
 							filteredTeachers={() => filteredTeachers("Pendientes")}
 							handleOpenModal={handleOpenModal}
+							query={query}
+							setQuery={setQuery}
+							loading={loading}
 						/>
 					) : (
 						<HistoryContent
@@ -86,6 +121,9 @@ const RequestSearchModal = ({ isOpen, onClose, selectedButton }) => {
 							setIsReversed={setIsReversed}
 							filteredTeachers={() => filteredTeachers("Historial")}
 							handleOpenModal={handleOpenModal}
+							query={query}
+							setQuery={setQuery}
+							loading={loading}
 						/>
 					)}
 				</div>
@@ -121,6 +159,9 @@ function PendingRequestsContent({
 	setIsReversed,
 	filteredTeachers,
 	handleOpenModal,
+	query,
+	setQuery,
+	loading,
 }) {
 	return (
 		<>
@@ -130,6 +171,8 @@ function PendingRequestsContent({
 					type="text"
 					placeholder="Buscar profesor..."
 					className={Styles["search-input"]}
+					value={query}
+					onChange={(e) => setQuery(e.target.value)}
 				/>
 			</div>
 
@@ -173,17 +216,22 @@ function PendingRequestsContent({
 			</div>
 
 			<div className={Styles["modal_results"]}>
-				{filteredTeachers().length > 0 ? (
-					filteredTeachers().map((teacher) => (
-						<TeacherResultBox
-							key={teacher.id}
-							teacher={teacher}
-							Click={() => handleOpenModal(teacher)}
-						/>
-					))
-				) : (
-					<DefaultSearchImage />
-				)}
+				{loading ? (
+					<div className={Styles.loading}>Cargando...</div>
+				) : (() => {
+					const list = filteredTeachers() || [];
+					return list.length > 0 ? (
+						list.map((teacher) => (
+							<TeacherResultBox
+								key={teacher.id}
+								teacher={teacher}
+								Click={() => handleOpenModal(teacher)}
+							/>
+						))
+					) : (
+						<DefaultSearchImage />
+					);
+				})()}
 			</div>
 		</>
 	);
@@ -199,6 +247,9 @@ function HistoryContent({
 	setIsReversed,
 	filteredTeachers,
 	handleOpenModal,
+	query,
+	setQuery,
+	loading,
 }) {
 	return (
 		<>
@@ -208,6 +259,8 @@ function HistoryContent({
 					type="text"
 					placeholder="Buscar profesor..."
 					className={Styles["search-input"]}
+					value={query}
+					onChange={(e) => setQuery(e.target.value)}
 				/>
 			</div>
 
@@ -251,17 +304,22 @@ function HistoryContent({
 			</div>
 
 			<div className={Styles["modal_results"]}>
-				{filteredTeachers().length > 0 ? (
-					filteredTeachers().map((teacher) => (
-						<TeacherResultBox
-							key={teacher.id}
-							teacher={teacher}
-							Click={() => handleOpenModal(teacher)}
-						/>
-					))
-				) : (
-					<DefaultSearchImage />
-				)}
+				{loading ? (
+					<div className={Styles.loading}>Cargando...</div>
+				) : (() => {
+					const list = filteredTeachers() || [];
+					return list.length > 0 ? (
+						list.map((teacher) => (
+							<TeacherResultBox
+								key={teacher.id}
+								teacher={teacher}
+								Click={() => handleOpenModal(teacher)}
+							/>
+						))
+					) : (
+						<DefaultSearchImage />
+					);
+				})()}
 			</div>
 		</>
 	);
