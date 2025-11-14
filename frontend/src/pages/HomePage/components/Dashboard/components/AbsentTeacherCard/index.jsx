@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import { fechAusentTeachersList } from './Teachers.js';
 import TeacherEventCard from '../TeacherEventCard';
 import PendingRequestsSkeleton from '../PendingRequestsSkeleton/index.jsx';
+import EmptyBox from '../EmptyBox';
 import TeacherProfileModal from '../../../../../../shared/components/TeacherProfileModal';
 
 export default function AbsentTeacherCard() {

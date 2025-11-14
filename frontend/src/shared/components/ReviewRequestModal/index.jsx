@@ -165,7 +165,7 @@ function ImageModal({ imageSrc, onClose }) {
         <button className={Styles.image_modal_close} onClick={onClose} aria-label="Cerrar imagen">
           ✕
         </button>
-        <img src={imageSrc} alt="Justificante" className={Styles.image_modal_img} draggable="false" />
+        <img src={`http://localhost:3000${imageSrc}`} alt="Justificante" className={Styles.image_modal_img} draggable="false" />
       </div>
     </div>
   );

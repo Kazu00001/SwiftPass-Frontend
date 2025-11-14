@@ -3,17 +3,30 @@ import Styles from "./InputForm.module.css";
 
 const InputForm = ({
 	title,
-	type,
-	Width,
-	Height,
-	options,
-	onChange,
-	content,
-	value,
-	name,
-	flexGrow,
+ 	type = 'text',
+ 	Width,
+ 	Height,
+ 	options,
+ 	onChange = () => {},
+ 	content,
+ 	value,
+ 	name = '',
+ 	flexGrow,
 }) => {
 	const [visiblePassword, setVisiblePassword] = useState(false);
+
+	// Soporte para modo controlado y no controlado: si `value` viene definido
+	// el componente actúa controlado; si no, mantiene su propio estado local
+	const isControlled = value !== undefined;
+	const [localValue, setLocalValue] = useState(content ?? '');
+	const displayedValue = isControlled ? value : localValue;
+
+	function handleChange(e) {
+		const v = e?.target?.value;
+		if (!isControlled) setLocalValue(v);
+		// siempre notificar hacia afuera si el padre pasó onChange
+		onChange && onChange(e);
+	}
 
 	return (
 		<>
@@ -24,16 +37,17 @@ const InputForm = ({
 				>
 					<input
 						name={name}
-						type={type === "password" && visiblePassword ? "text" : type}
+						type={type === 'password' && visiblePassword ? 'text' : type}
 						className={Styles.inputForm}
 						required
+						autoComplete="off"
 						style={{
 							width: Width,
 							height: Height,
-							paddingRight: type === "password" && "2.5vw",
+							paddingRight: type === 'password' && '2.5vw',
 						}}
-						onChange={onChange}
-						value={value || content}
+						onChange={handleChange}
+						value={displayedValue}
 					/>
 					<label htmlFor="" className={Styles.labelInputForm}>
 						{title}
@@ -66,14 +80,13 @@ const InputForm = ({
 								name={name}
 								id=""
 								className={Styles.inputForm}
-								onChange={onChange}
+								onChange={handleChange}
 								required
 								style={{ width: Width, height: Height }}
-								defaultValue={content}
+								value={displayedValue}
 							>
 								{options?.map((optionVal, i) => (
 									<option
-										selected={optionVal === value}
 										value={optionVal}
 										key={`${optionVal}-${i}`}
 									>
@@ -97,15 +110,13 @@ const InputForm = ({
 								style={{
 									width: Width,
 									height: Height,
-									resize: "none",
-									paddingTop: "10px",
+									resize: 'none',
+									paddingTop: '10px',
 									flexGrow: flexGrow,
 								}}
-								onChange={onChange}
-								value={value || content} // Valor controlado para textarea
-							>
-								{content || value}
-							</textarea>
+								onChange={handleChange}
+								value={displayedValue} // Valor controlado para textarea
+							/>
 							<label htmlFor="" className={Styles.labelInputForm}>
 								{title}
 							</label>
