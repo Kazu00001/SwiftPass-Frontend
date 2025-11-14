@@ -12,7 +12,11 @@ const teacher = {
 	email: "Rodrigo_Melanzadez@academicos.udg.mx",
 };
 
-export default function AttendanceJustificationModal({ isOpen, onClose }) {
+export default function AttendanceJustificationModal({
+	isOpen,
+	onClose,
+	setSelectedButton,
+}) {
 	const [selectedDays, setSelectedDays] = useState([]);
 	const [selectedFile, setSelectedFile] = useState(null);
 
@@ -32,7 +36,11 @@ export default function AttendanceJustificationModal({ isOpen, onClose }) {
 	return (
 		<div className={Styles["modal_overlay"]}>
 			<div className={Styles["modal_container"]}>
-				<TeacherProfileHeader teacher={teacher} onClose={onClose} />
+				<TeacherProfileHeader
+					teacher={teacher}
+					onClose={onClose}
+					setSelectedButton={setSelectedButton}
+				/>
 
 				<div className={Styles["teacher_profile_container"]}>
 					<div className={Styles["attendance_calendar_main_container"]}>
@@ -89,7 +97,7 @@ export default function AttendanceJustificationModal({ isOpen, onClose }) {
 /* -------------------------------------------------------
    ° Subcomponente: TeacherProfileHeader
 -------------------------------------------------------- */
-function TeacherProfileHeader({ teacher, onClose }) {
+function TeacherProfileHeader({ teacher, onClose, setSelectedButton }) {
 	return (
 		<div className={Styles["modal_header"]}>
 			<div className={Styles["teacher_info_container"]}>
@@ -108,7 +116,10 @@ function TeacherProfileHeader({ teacher, onClose }) {
 			</div>
 			<button
 				className={Styles["modal_close_button"]}
-				onClick={onClose}
+				onClick={() => {
+					onClose();
+					setSelectedButton(null);
+				}}
 				aria-label="Cerrar modal"
 			>
 				✕
