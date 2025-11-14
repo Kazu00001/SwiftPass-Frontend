@@ -58,8 +58,7 @@ export default function AttendanceJustificationModal({
 							Width="100%"
 							Height="40px"
 							name="Holiii"
-							options={["", "Opción A", "Opción B", "Opción C"]}
-							value={"hola"}
+							options={["", "Asistencia médica", "Asunto familiar", "Emergencia/Imprevisto", "Compromiso laboral/académico", "Falla de transporte", "Cita programada"]}							value={"hola"}
 						/>
 
 						<div
