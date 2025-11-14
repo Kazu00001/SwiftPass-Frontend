@@ -24,4 +24,5 @@ export const fetchTeachers2 = async () => {
   }
 }
 export const TEACHERS = await fetchTeachers(); 
+console.log("TEACHERS loaded:", TEACHERS);
 

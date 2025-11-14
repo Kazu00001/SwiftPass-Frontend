@@ -88,8 +88,8 @@ export default function PendingRequestsCard() {
 					{filteredTeachers().length === 0 ? (
 						<EmptyBox />
 					) : (
-						filteredTeachers().map((teacher) => (
-							<div key={teacher.id} onClick={() => handleOpenModal(teacher)}>
+						filteredTeachers().map((teacher, index) => (
+							<div key={`${teacher.id}-${index}`} onClick={() => handleOpenModal(teacher)}>
 								<TeacherEventCard
 									name={teacher.name}
 									photo={teacher.photo}

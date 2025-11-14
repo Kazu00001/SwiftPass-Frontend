@@ -38,35 +38,35 @@ export default function AttendanceStats() {
 
 	// calcular counts
 	const counts = STATUS_ORDER.reduce((acc, s) => {
-		acc[s.key] = data.filter((d) => d.status === s.code).length;
+		acc[s.key] = total > 0 ? (data.filter((d) => d.status === s.code).length) : 0;
 		return acc;
 	}, {});
 
-	// porcentajes (redondeados)
+	// porcentajes (redondeados) - evitar división por cero
 	const percentages = Object.fromEntries(
-		Object.entries(counts).map(([k, v]) => [k, Math.round((v / total) * 100)])
+		Object.entries(counts).map(([k, v]) => [k, total > 0 ? Math.round((v / total) * 100) : 0])
 	);
 
-	// porcentaje central = TODO menos faltas
+	// porcentaje central = total menos faltas
 	const presentCount = Object.entries(counts).reduce(
 		(acc, [k, v]) => (k === "falta" ? acc : acc + v),
 		0
 	);
-	const centerPercent = Math.round((presentCount / total) * 100);
+	const centerPercent = total > 0 ? Math.round((presentCount / total) * 100) : 0;
 
 	const R = 40;
 	const C = 2 * Math.PI * R;
 
 	let accumulated = 0;
 	const segments = STATUS_ORDER.map((s) => {
-		const fraction = counts[s.key] / total;
-		const length = fraction * C;
+		const fraction = total > 0 ? Number(counts[s.key]) / Number(total) : 0;
+		const length = Number.isFinite(Number(fraction)) ? Number(fraction) * Number(C) : 0;
 		const seg = {
 			...s,
 			count: counts[s.key],
 			percent: percentages[s.key],
-			length,
-			offset: accumulated,
+			length: Number.isFinite(length) ? length : 0,
+			offset: Number.isFinite(accumulated) ? accumulated : 0,
 		};
 		accumulated += length;
 		return seg;

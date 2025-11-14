@@ -4,17 +4,17 @@ import TeacherSearchModal from "../TeacherSearchModal";
 import RequestSearchModal from "../RequestSearchModal";
 import AttendanceJustificationModal from "../AttendanceJustificationModal";
 import DownloadReportModal from "../DownloadReportModal";
-import { getTypeUser } from "../../../utils/env";
-
+import { getTypeUser, getTeacherId } from "../../../utils/env";
+import { fetchAttendanceDateRange } from "./hook.js";
 const searchIcon = "/Graphics/icons/lupaW.png";
 const reportIcon = "/Graphics/icons/reports.png";
 const notiIcon = "/Graphics/icons/noti.png";
 const requestIcon = "/Graphics/icons/circle.png";
 
-// obtener tipo de usuario en tiempo de render
-const credencial = getTypeUser() || null;
-
 const NavBar = () => {
+	// obtener tipo de usuario y teacherId en tiempo de render (síncrono)
+	const credencial = getTypeUser() || null;
+	const teacherId = getTeacherId() || null;
 	console.log("User Type in NavBar: ", credencial);
 	const [isModalOpen, setIsModalOpen] = React.useState(false);
 	const [isRequestModalOpen, setIsRequestModalOpen] = React.useState(false);
@@ -73,7 +73,11 @@ const NavBar = () => {
 								selectedButton={selectedButton}
 								setSelectedButton={setSelectedButton}
 							/>
-							<NavButton name="Reporte" icon={reportIcon} />
+							<NavButton
+								Click={() => fetchAttendanceDateRange(teacherId)}
+								name="Reporte"
+								icon={reportIcon}
+							/>
 						</>
 					)}
 				</nav>
@@ -140,8 +144,9 @@ const NavButton = ({
 	return (
 		<button
 			onClick={() => {
-				setSelectedButton(name);
-				Click();
+				// Only call setters/callbacks if they're functions
+				if (typeof setSelectedButton === "function") setSelectedButton(name);
+				if (typeof Click === "function") Click();
 			}}
 			className={Styles["navbar_button"]}
 		>

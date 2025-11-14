@@ -216,14 +216,14 @@ function PendingRequestsContent({
 			</div>
 
 			<div className={Styles["modal_results"]}>
-				{loading ? (
+					{loading ? (
 					<div className={Styles.loading}>Cargando...</div>
 				) : (() => {
 					const list = filteredTeachers() || [];
 					return list.length > 0 ? (
-						list.map((teacher) => (
+						list.map((teacher, index) => (
 							<TeacherResultBox
-								key={teacher.id}
+								key={`${teacher.id}-${index}`}
 								teacher={teacher}
 								Click={() => handleOpenModal(teacher)}
 							/>
@@ -304,14 +304,14 @@ function HistoryContent({
 			</div>
 
 			<div className={Styles["modal_results"]}>
-				{loading ? (
+					{loading ? (
 					<div className={Styles.loading}>Cargando...</div>
 				) : (() => {
 					const list = filteredTeachers() || [];
 					return list.length > 0 ? (
-						list.map((teacher) => (
+						list.map((teacher, index) => (
 							<TeacherResultBox
-								key={teacher.id}
+								key={`${teacher.id}-${index}`}
 								teacher={teacher}
 								Click={() => handleOpenModal(teacher)}
 							/>

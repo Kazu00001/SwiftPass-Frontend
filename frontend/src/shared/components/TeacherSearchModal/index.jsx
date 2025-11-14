@@ -109,9 +109,9 @@ const TeacherSearchModal = ({ isOpen, onClose, selectedButton }) => {
 						{loading ? (
 							<div className={Styles.loading}>Cargando...</div>
 						) : filteredList && filteredList.length > 0 ? (
-							filteredList.map((teacher) => (
+							filteredList.map((teacher, index) => (
 								<TeacherResultBox
-									key={teacher.id}
+									key={`${teacher.id}-${index}`}
 									teacher={teacher}
 									onClick={() => handleTeacherClick(teacher)} // 🔹 CLICK
 								/>

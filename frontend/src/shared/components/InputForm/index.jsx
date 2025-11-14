@@ -23,18 +23,17 @@ const InputForm = ({
 					style={{ width: Width, height: Height }}
 				>
 					<input
-						name={name || ''}
-						type={type === 'password' && visiblePassword ? 'text' : (type || 'text')}
+						name={name}
+						type={type === "password" && visiblePassword ? "text" : type}
 						className={Styles.inputForm}
 						required
-						autoComplete="off"
 						style={{
 							width: Width,
 							height: Height,
-							paddingRight: type === 'password' && '2.5vw',
+							paddingRight: type === "password" && "2.5vw",
 						}}
 						onChange={onChange}
-						value={value ?? content ?? ''}
+						value={value || content}
 					/>
 					<label htmlFor="" className={Styles.labelInputForm}>
 						{title}
@@ -64,16 +63,20 @@ const InputForm = ({
 					{type === "select" && (
 						<>
 							<select
-								name={name || ''}
+								name={name}
 								id=""
 								className={Styles.inputForm}
 								onChange={onChange}
 								required
 								style={{ width: Width, height: Height }}
-								value={value ?? content}
+								defaultValue={content}
 							>
-								{options?.map((optionVal) => (
-									<option value={optionVal} key={optionVal}>
+								{options?.map((optionVal, i) => (
+									<option
+										selected={optionVal === value}
+										value={optionVal}
+										key={`${optionVal}-${i}`}
+									>
 										{optionVal}
 									</option>
 								))}
@@ -86,21 +89,20 @@ const InputForm = ({
 					{type === "area" && (
 						<>
 							<textarea
-								name={name || ''}
+								name={name}
 								id=""
 								cols="30"
 								rows="10"
 								className={Styles.inputForm}
-								autoComplete="off"
 								style={{
 									width: Width,
 									height: Height,
-									resize: 'none',
-									paddingTop: '10px',
+									resize: "none",
+									paddingTop: "10px",
 									flexGrow: flexGrow,
 								}}
 								onChange={onChange}
-								value={value ?? content ?? ''} // Valor controlado para textarea
+								value={value || content} // Valor controlado para textarea
 							>
 								{content || value}
 							</textarea>
