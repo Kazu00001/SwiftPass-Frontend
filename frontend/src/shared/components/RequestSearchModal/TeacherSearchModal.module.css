@@ -14,7 +14,7 @@
 .modal_overlay {
 	position: absolute;
 	top: 0;
-	width: calc(100vw);
+	width: calc(100vw - 9rem);
 	height: 100%;
 	background-color: rgba(0, 0, 0, 0.2);
 	z-index: 100;

@@ -3,6 +3,7 @@ import Styles from "./NavBar.module.css";
 import TeacherSearchModal from "../TeacherSearchModal";
 import RequestSearchModal from "../RequestSearchModal";
 import AttendanceJustificationModal from "../AttendanceJustificationModal";
+import DownloadReportModal from "../DownloadReportModal";
 
 const searchIcon = "/Graphics/icons/lupaW.png";
 const reportIcon = "/Graphics/icons/reports.png";
@@ -16,6 +17,7 @@ const NavBar = () => {
 	const [isRequestModalOpen, setIsRequestModalOpen] = React.useState(false);
 	const [isJustModalOpen, setIsJustModalOpen] = React.useState(false);
 	const [selectedButton, setSelectedButton] = React.useState(null);
+	const [isDownloadModalOpen, setIsDownloadModalOpen] = React.useState(false);
 
 	const handleSearchClick = () => {
 		setIsModalOpen(true);
@@ -25,6 +27,10 @@ const NavBar = () => {
 	};
 	const handleJustModalClick = () => {
 		setIsJustModalOpen(true);
+	};
+
+	const handleReportModalClick = () => {
+		setIsDownloadModalOpen(true);
 	};
 	return (
 		<>
@@ -41,6 +47,7 @@ const NavBar = () => {
 								setSelectedButton={setSelectedButton}
 							/>
 							<NavButton
+								Click={handleReportModalClick}
 								name="Reportes"
 								icon={reportIcon}
 								selectedButton={selectedButton}
@@ -85,6 +92,17 @@ const NavBar = () => {
 				onClose={() => {
 					setIsModalOpen(false);
 					selectedButton !== "Buscar"
+						? setSelectedButton(selectedButton)
+						: setSelectedButton(null);
+				}}
+				selectedButton={selectedButton}
+				setSelectedButton={setSelectedButton}
+			/>
+			<DownloadReportModal
+				isOpen={isDownloadModalOpen}
+				onClose={() => {
+					setIsDownloadModalOpen(false);
+					selectedButton !== "Reportes"
 						? setSelectedButton(selectedButton)
 						: setSelectedButton(null);
 				}}

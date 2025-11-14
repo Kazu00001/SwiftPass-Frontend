@@ -23,7 +23,7 @@
 	width: 0;
 }
 .modal_container {
-	width: calc(50vw - 9rem);
+	width: clamp(18rem, 21rem, 26rem);
 	height: 100%;
 	background-color: #fff;
 	border-radius: 8px;
@@ -33,6 +33,7 @@
 	transition: 0.5s;
 	z-index: 101;
 	overflow: hidden;
+	font-family: "Poppins", sans-serif;
 }
 
 .modal_container_close {
@@ -45,7 +46,7 @@
 }
 
 .modal_content {
-	width: calc(50vw - 9rem);
+	width: clamp(18rem, 21rem, 26rem);
 	height: 100%;
 	position: absolute;
 	box-sizing: border-box;
@@ -65,7 +66,6 @@
 .modal_header h2 {
 	margin: 0;
 	padding: 0;
-	font-family: "Poppins", sans-serif;
 	font-size: 1.2rem;
 	color: #333333;
 	display: flex;
@@ -88,72 +88,45 @@
 	background: none;
 	border: none;
 }
-
-.search-bar_container {
-	width: calc(100% - 2rem);
-	height: 2.3rem;
-	margin: 1rem;
-	display: flex;
-	align-items: center;
-}
-
-.search-input {
-	width: 100%;
-	height: 100%;
-	border-radius: 100px;
-	border: 1px solid #939393;
-	box-sizing: border-box;
-	padding-left: 2rem;
-	padding-right: 1rem;
-}
-
-.search-icon {
-	width: 1.2rem;
-	height: 1.2rem;
-	position: absolute;
-	margin-left: 0.5rem;
-	pointer-events: none;
-	user-select: none;
-	opacity: 0.6;
-}
 .modal_results {
 	width: 100%;
 	height: calc(100% - 7.5rem);
-	overflow-y: scroll;
-	overflow-x: hidden;
 	display: flex;
-	flex-direction: column;
+	align-items: center;
+	flex-wrap: wrap;
+	align-content: center;
 	box-sizing: border-box;
 	padding: 1rem;
 	gap: 0.8rem;
 }
 
-.modal_results::-webkit-scrollbar {
-	opacity: 0;
-	width: 8px;
-}
-
-.modal_results:hover::-webkit-scrollbar {
-	opacity: 1;
-}
-
-.modal_results::-webkit-scrollbar-track {
-	background: #ffffff;
+.title-report_container {
+	width: 100%;
+	height: 5rem;
+	background: linear-gradient(to right, #2f3243, #4f4f6b);
+	color: white;
+	display: flex;
+	align-items: center;
+	box-sizing: border-box;
+	padding: 1rem;
 	border-radius: 10px;
+	font-size: 1.2rem;
 }
 
-.modal_results::-webkit-scrollbar-thumb {
-	background-color: #c9c9c9ce;
-	border-radius: 10px;
-	display: none;
-	transition: 0.3s;
+.download_button {
+	width: 100%;
+	height: 3rem;
+	background-color: white;
+	border: 1px solid #535e73;
+	border-radius: 5px;
+	color: #535e73;
+	cursor: pointer;
 }
-
-.modal_results:hover::-webkit-scrollbar-thumb {
-	opacity: 1;
-	display: block;
+.download_button:hover {
+	background-color: #535e73;
+	color: white;
 }
-
-.modal_results::-webkit-scrollbar-thumb:hover {
-	background-color: #a7a7a7ce;
+.inputs_container {
+	display: flex;
+	gap: 0.5rem;
 }
