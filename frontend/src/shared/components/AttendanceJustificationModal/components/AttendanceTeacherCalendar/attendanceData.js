@@ -1,28 +1,33 @@
-// attendanceData.js
-// formato: { fecha: "YYYY-MM-DD", estado: <number> }
-// estados: 1: Justificado, 2: Permiso, 3: Asistencia, 4: Falta, 5: Retardo
 
-export const attendanceData = [
-	{ fecha: "2025-11-01", estado: 3 },
-	{ fecha: "2025-07-16", estado: 4 },
-	{ fecha: "2025-11-02", estado: 4 }, // Falta (selectable if < today)
-	{ fecha: "2025-11-03", estado: 1 },
-	{ fecha: "2025-11-04", estado: 4 },
-	{ fecha: "2025-11-05", estado: 2 },
-	{ fecha: "2025-11-06", estado: 3 },
-	{ fecha: "2025-11-07", estado: 4 },
-	{ fecha: "2025-11-08", estado: 3 }, // Falta
-	{ fecha: "2025-11-09", estado: 3 },
-	{ fecha: "2025-11-10", estado: 5 },
-	// agrega más fechas según necesites
-];
 
-export const schedule = {
-	monday: ["math"],
-	tuesday: ["science"],
-	wednesday: ["history"],
-	thursday: ["art"],
-	friday: ["pe"],
-	saturday: [],
-	sunday: [],
+import { API_URL, getTeacherId } from "../../../../../utils/env.js";
+
+import { httpclientplugin_requestAttendanceData } from "../../../../../Plugins/index.js";
+export const fetchAttendanceData = async () => {
+	const ID_TEACHER = getTeacherId();
+	console.log("Fetching attendance data for teacher ID: --- ", ID_TEACHER);
+	if (!ID_TEACHER) return [];
+	try {
+		const url = `${API_URL}/api/teachers/${ID_TEACHER}/attendance`;
+		console.log("Attendance data URL:", url);
+		const attendanceData = await httpclientplugin_requestAttendanceData.get(url);
+
+		return attendanceData;
+	} catch (error) {
+		console.error("Error fetching attendance data:", error);
+		return [];
+	}
 };
+export const fechtSchedule = async () => {
+	const ID_TEACHER = getTeacherId();
+	if (!ID_TEACHER) return {};
+	try {
+		const url = `${API_URL}/api/teachers/${ID_TEACHER}/schedule`;
+		const scheduleData = await httpclientplugin_requestAttendanceData.get_schedule(url);
+		return scheduleData;
+	} catch (error) {
+		console.error("Error fetching schedule data:", error);
+		return {};
+	}
+};
+

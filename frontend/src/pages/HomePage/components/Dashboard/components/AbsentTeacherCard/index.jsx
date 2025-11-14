@@ -1,17 +1,26 @@
-import Styles from "./AbsentTeacherCard.module.css";
-import { useState, useEffect } from "react";
-import { TEACHERS } from "../PendingRequestsCard/Teachers.js";
-import TeacherEventCard from "../TeacherEventCard";
-import EmptyBox from "../EmptyBox/index.jsx";
-import PendingRequestsSkeleton from "../PendingRequestsSkeleton/index.jsx";
-import TeacherProfileModal from "../../../../../../shared/components/TeacherProfileModal";
+import Styles from './AbsentTeacherCard.module.css';
+import { useState, useEffect } from 'react';
+import { fechAusentTeachersList } from './Teachers.js';
+import TeacherEventCard from '../TeacherEventCard';
+import EmptyBox from '../EmptyBox/index.jsx';
+import PendingRequestsSkeleton from '../PendingRequestsSkeleton/index.jsx';
+import TeacherProfileModal from '../../../../../../shared/components/TeacherProfileModal';
 
 export default function AbsentTeacherCard() {
-	const [activeTab, setActiveTab] = useState("Todos");
-	const [isLoading, setIsLoading] = useState(true);
 
-	// 🔥 MISMA LÓGICA QUE PendingRequestsCard
-	const [selectedTeacher, setSelectedTeacher] = useState(null);
+const [activeTab, setActiveTab] = useState('Todos');
+const [isLoading, setIsLoading] = useState(true);
+const [selectedTeacher, setSelectedTeacher] = useState(null);
+const [TEACHERS, setTEACHERS] = useState([]);
+useEffect(() => {
+    const fetchData = async () => {
+        setIsLoading(true);
+        const data = await fechAusentTeachersList();
+        setTEACHERS(data || []);
+        setIsLoading(false);
+    }
+    fetchData();
+}, []); 
 
 	useEffect(() => {
 		const timer = setTimeout(() => setIsLoading(false), 3000);

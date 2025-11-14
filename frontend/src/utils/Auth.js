@@ -87,7 +87,18 @@ export function getTeacherIdFromToken() {
   const id = payload?.id ?? payload?.sub ?? payload?.teacherId ?? payload?.userId ?? payload?.uid;
   return id != null ? String(id) : null;
 }
-
+export function getUserTypeFromToken() {
+  const token = getAuthToken();
+  if (!token) return null;
+  const payload = decodeJwtPayload(token);
+  if (!payload) {
+    console.warn('getUserTypeFromToken: token found but payload could not be decoded');
+    return null;
+  }
+  // claves comunes donde podría residir el tipo de usuario
+  const type = payload?.type ?? payload?.userType ?? payload?.rol;
+  return type != null ? String(type) : null;
+}
 export function getAuthHeader() {
   const t = getAuthToken();
   return t ? { Authorization: `Bearer ${t}` } : {};

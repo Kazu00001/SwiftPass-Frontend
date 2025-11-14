@@ -3,11 +3,21 @@ import Styles from "./AttendanceMonitor.module.css";
 import SearchBar from "./components/SearchBar";
 import AttendanceList from "./components/AttendanceList";
 import AttendanceListSkeleton from "./components/AttendanceListSkeleton";
-import { TEACHERS } from "../Dashboard/components/PendingRequestsCard/Teachers.js";
+import { fetchTeachers2 } from "../Dashboard/components/PendingRequestsCard/Teachers.js";
 
 const AttendanceMonitor = () => {
 	const [query, setQuery] = useState("");
 	const [isLoading, setIsLoading] = useState(true);
+  const [TEACHERS, setTEACHERS] = useState([]);
+  useEffect(() => {
+      const fetchData = async () => {
+          setIsLoading(true);
+          const data = await fetchTeachers2();
+          setTEACHERS(data || []);
+          setIsLoading(false);
+      };
+      fetchData();
+  }, []);
 
 	useEffect(() => {
 		const timer = setTimeout(() => {

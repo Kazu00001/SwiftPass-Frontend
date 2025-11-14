@@ -4,15 +4,18 @@ import TeacherSearchModal from "../TeacherSearchModal";
 import RequestSearchModal from "../RequestSearchModal";
 import AttendanceJustificationModal from "../AttendanceJustificationModal";
 import DownloadReportModal from "../DownloadReportModal";
+import { getTypeUser } from "../../../utils/env";
 
 const searchIcon = "/Graphics/icons/lupaW.png";
 const reportIcon = "/Graphics/icons/reports.png";
 const notiIcon = "/Graphics/icons/noti.png";
 const requestIcon = "/Graphics/icons/circle.png";
 
-const credencial = "admin";
+// obtener tipo de usuario en tiempo de render
+const credencial = getTypeUser() || null;
 
 const NavBar = () => {
+	console.log("User Type in NavBar: ", credencial);
 	const [isModalOpen, setIsModalOpen] = React.useState(false);
 	const [isRequestModalOpen, setIsRequestModalOpen] = React.useState(false);
 	const [isJustModalOpen, setIsJustModalOpen] = React.useState(false);
