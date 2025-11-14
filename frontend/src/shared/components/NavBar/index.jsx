@@ -73,12 +73,7 @@ const NavBar = () => {
 								selectedButton={selectedButton}
 								setSelectedButton={setSelectedButton}
 							/>
-							<NavButton
-								name="Reporte"
-								icon={reportIcon}
-								selectedButton={selectedButton}
-								setSelectedButton={setSelectedButton}
-							/>
+							<NavButton name="Reporte" icon={reportIcon} />
 						</>
 					)}
 				</nav>
@@ -128,6 +123,7 @@ const NavBar = () => {
 				<AttendanceJustificationModal
 					isOpen={isJustModalOpen}
 					onClose={() => setIsJustModalOpen(false)}
+					setSelectedButton={setSelectedButton}
 				/>
 			)}
 		</>
