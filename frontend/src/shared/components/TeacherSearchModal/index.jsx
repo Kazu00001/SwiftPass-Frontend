@@ -3,7 +3,7 @@ import Styles from "./TeacherSearchModal.module.css";
 import DefaultSearchImage from "./components/DefaultSearchImage";
 import TeacherResultBox from "./components/TeacherResultBox";
 import TeacherProfileModal from "../TeacherProfileModal";
-import {fetchTeachers2} from "./Teachers";
+import { fetchTeachers2 } from "./Teachers";
 const searchIcon = "/Graphics/icons/lupa.png";
 
 const TeacherSearchModal = ({ isOpen, onClose, selectedButton }) => {
@@ -11,6 +11,10 @@ const TeacherSearchModal = ({ isOpen, onClose, selectedButton }) => {
 	const [query, setQuery] = useState("");
 	const [debouncedQuery, setDebouncedQuery] = useState("");
 	const [loading, setLoading] = useState(false);
+
+	// 🔹 Nuevo estado
+	const [selectedTeacher, setSelectedTeacher] = useState(null);
+	const [isProfileModalOpen, setIsProfileModalOpen] = useState(false);
 
 	useEffect(() => {
 		let mounted = true;
@@ -21,7 +25,7 @@ const TeacherSearchModal = ({ isOpen, onClose, selectedButton }) => {
 				if (!mounted) return;
 				setTEACHERS(Array.isArray(list) ? list : []);
 			} catch (err) {
-				console.error('TeacherSearchModal: failed to load teachers', err);
+				console.error("TeacherSearchModal: failed to load teachers", err);
 				if (mounted) setTEACHERS([]);
 			} finally {
 				if (mounted) setLoading(false);
@@ -31,9 +35,11 @@ const TeacherSearchModal = ({ isOpen, onClose, selectedButton }) => {
 		return () => (mounted = false);
 	}, []);
 
-	// debounce query input to avoid filtering on every keystroke
 	useEffect(() => {
-		const t = setTimeout(() => setDebouncedQuery(query.trim().toLowerCase()), 200);
+		const t = setTimeout(
+			() => setDebouncedQuery(query.trim().toLowerCase()),
+			200
+		);
 		return () => clearTimeout(t);
 	}, [query]);
 
@@ -47,11 +53,24 @@ const TeacherSearchModal = ({ isOpen, onClose, selectedButton }) => {
 			return name.includes(q) || id.includes(q) || email.includes(q);
 		});
 	}, [TEACHERS, debouncedQuery]);
+
 	useEffect(() => {
 		if (selectedButton !== "Buscar" && isOpen) {
 			onClose();
 		}
 	}, [selectedButton, isOpen, onClose]);
+
+	// 🔹 Al hacer clic en un profesor
+	const handleTeacherClick = (teacher) => {
+		setSelectedTeacher(teacher);
+		setIsProfileModalOpen(true);
+	};
+
+	// 🔹 Cerrar modal
+	const handleCloseProfileModal = () => {
+		setSelectedTeacher(null);
+		setIsProfileModalOpen(false);
+	};
 
 	return (
 		<section
@@ -89,14 +108,16 @@ const TeacherSearchModal = ({ isOpen, onClose, selectedButton }) => {
 					<div className={Styles["modal_results"]}>
 						{loading ? (
 							<div className={Styles.loading}>Cargando...</div>
+						) : filteredList && filteredList.length > 0 ? (
+							filteredList.map((teacher) => (
+								<TeacherResultBox
+									key={teacher.id}
+									teacher={teacher}
+									onClick={() => handleTeacherClick(teacher)} // 🔹 CLICK
+								/>
+							))
 						) : (
-							filteredList && filteredList.length > 0 ? (
-								filteredList.map((teacher) => (
-									<TeacherResultBox key={teacher.id} teacher={teacher} />
-								))
-							) : (
-								<DefaultSearchImage />
-							)
+							<DefaultSearchImage />
 						)}
 					</div>
 				</div>
@@ -107,7 +128,16 @@ const TeacherSearchModal = ({ isOpen, onClose, selectedButton }) => {
 					!isOpen ? Styles["modal_overlay_close"] : ""
 				}`}
 				onClick={onClose}
-			></div>
+			/>
+
+			{/* 🔹 Modal del profesor */}
+			{selectedTeacher && (
+				<TeacherProfileModal
+					teacher={selectedTeacher}
+					isOpen={isProfileModalOpen}
+					onClose={handleCloseProfileModal}
+				/>
+			)}
 		</section>
 	);
 };

@@ -86,7 +86,15 @@ export default function AttendanceJustificationModal({
 							Height="10rem"
 							name="Holiii"
 						/>
-						<button className={Styles["send_button"]}>Enviar</button>
+						<button
+							className={Styles["send_button"]}
+							onClick={() => {
+								onClose();
+								setSelectedButton(null);
+							}}
+						>
+							Enviar
+						</button>
 					</div>
 				</div>
 			</div>
@@ -111,7 +119,7 @@ function TeacherProfileHeader({ teacher, onClose, setSelectedButton }) {
 				</div>
 				<div className={Styles["teacher_details_container"]}>
 					<h2 className={Styles["teacher_name"]}>{teacher.name}</h2>
-					<p className={Styles["teacher_email"]}>Email: {teacher.email}</p>
+					<p className={Styles["teacher_email"]}>{teacher.email}</p>
 				</div>
 			</div>
 			<button
