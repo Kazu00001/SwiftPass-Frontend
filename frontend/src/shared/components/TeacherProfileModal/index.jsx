@@ -3,7 +3,6 @@ import TeacherSchedule from "./components/TeacherSchedule";
 import RequestHistory from "./components/RequestHistory";
 import AttendanceCalendar from "./components/AttendanceCalendar";
 import AttendanceStats from "./components/AttendanceStats";
-import {fetchAttendanceDateRange} from "./hook.js";
 import EmptyBox from "../EmptyBox";
 import { useState } from "react";
 
@@ -137,11 +136,8 @@ function TeacherCase2({ schedule, teacherId }) {
 				<AttendanceCalendar teacherId={teacherId} isAdmin={true} />
 			</div>
 			<div className={Styles["stats_main_container"]}>
-				<AttendanceStats teacherId={teacherId} />
-				<button
-					className={Styles["stats_history_button"]}
-					onClick={() => fetchAttendanceDateRange(teacherId)}
-				>
+				<AttendanceStats teacherId = {teacherId} />
+				<button className={Styles["stats_history_button"]}>
 					Descargar Historial
 				</button>
 			</div>
