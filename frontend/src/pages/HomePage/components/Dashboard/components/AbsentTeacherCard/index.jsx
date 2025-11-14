@@ -11,7 +11,17 @@ export default function AbsentTeacherCard() {
 const [activeTab, setActiveTab] = useState('Todos');
 const [isLoading, setIsLoading] = useState(true);
 const [selectedTeacher, setSelectedTeacher] = useState(null);
-const [TEACHERS, setTEACHERS] = useState([]);
+const [TEACHERS, setTEACHERS] = useState([]);   
+useEffect(() => {
+    const fetchData = async () => {
+        setIsLoading(true);
+        const data = await fechAusentTeachersList();
+        setTEACHERS(data || []);
+        setIsLoading(false);
+    };
+    fetchData();
+}, []);
+
 useEffect(() => {
     const fetchData = async () => {
         setIsLoading(true);
