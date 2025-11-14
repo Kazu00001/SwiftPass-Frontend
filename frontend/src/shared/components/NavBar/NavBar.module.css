@@ -92,6 +92,13 @@
 
 }
 
+.logout_profile_photo-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
 .logout_profile_label{
     font-weight: 500;
     font-family: poppins, sans-serif;

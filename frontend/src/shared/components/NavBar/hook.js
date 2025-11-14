@@ -73,3 +73,55 @@ export const fetchAttendanceDateRange = async (teacher_id = null, start = null, 
   }
 };
 
+/**
+ * Obtiene la foto del profesor desde el endpoint /api/teachers/{id}/photo
+ * Devuelve { ok: true, url, blob } donde url es un object URL listo para usar en <img />
+ * o { ok: false, error } en caso de fallo.
+ */
+export const fetchTeacherPhoto = async (teacher_id) => {
+  try {
+    if (!teacher_id) return { ok: false, error: 'teacher_id requerido' };
+    const url = `${API_URL}/api/teachers/${teacher_id}/photo`;
+    const headers = { ...getAuthHeader(), Accept: '*/*' };
+    const resp = await fetch(url, { method: 'GET', headers });
+    console.log("fetchTeacherPhoto response:", resp);
+    if (!resp.ok) {
+        const text = await resp.text().catch(() => null);
+        return { ok: false, error: text || `HTTP ${resp.status}` };
+    
+    }
+    const contentType = resp.headers.get('Content-Type') || '';
+    // Si el endpoint devuelve JSON (p.ej. { url: '...', image: 'base64...' }) lo parseamos
+    if (contentType.includes('application/json')) {
+      const json = await resp.json().catch(() => null);
+      if (!json) return null;
+      // Si el backend devuelve una URL pública a la imagen (campo 'src' o 'url')
+      if (json.src) {
+        const s = String(json.src);
+        if (s.startsWith('/')) return `${API_URL}${s}`;
+        return s;
+      }
+      if (json.url) {
+        const u = String(json.url);
+        if (u.startsWith('/')) return `${API_URL}${u}`;
+        return u;
+      }
+      // Si el backend devuelve base64 en json.image
+      if (json.image) {
+        const mime = json.mime || 'image/png';
+        return `data:${mime};base64,${json.image}`;
+      }
+      return null;
+    }
+
+    // Si es binario (imagen), creamos un object URL y devolvemos la URL como string
+    const blob = await resp.blob();
+    const objectUrl = URL.createObjectURL(blob);
+    return objectUrl;
+  } catch (error) {
+    console.error('fetchTeacherPhoto error:', error);
+    return null;
+  }
+};
+
+

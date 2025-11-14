@@ -1,11 +1,13 @@
-import React from "react";
+import React, { useState,useEffect } from "react";
 import Styles from "./NavBar.module.css";
 import TeacherSearchModal from "../TeacherSearchModal";
 import RequestSearchModal from "../RequestSearchModal";
 import AttendanceJustificationModal from "../AttendanceJustificationModal";
 import DownloadReportModal from "../DownloadReportModal";
 import { getTypeUser, getTeacherId } from "../../../utils/env";
-import { fetchAttendanceDateRange } from "./hook.js";
+import {clearAuthToken } from "../../../utils/Auth.js";
+import { fetchAttendanceDateRange, fetchTeacherPhoto } from "./hook.js";
+import { API_URL } from "../../../utils/env";
 const searchIcon = "/Graphics/icons/lupaW.png";
 const reportIcon = "/Graphics/icons/reports.png";
 const notiIcon = "/Graphics/icons/noti.png";
@@ -15,13 +17,72 @@ const NavBar = () => {
 	// obtener tipo de usuario y teacherId en tiempo de render (síncrono)
 	const credencial = getTypeUser() || null;
 	const teacherId = getTeacherId() || null;
-	console.log("User Type in NavBar: ", credencial);
-	const [isModalOpen, setIsModalOpen] = React.useState(false);
-	const [isRequestModalOpen, setIsRequestModalOpen] = React.useState(false);
-	const [isJustModalOpen, setIsJustModalOpen] = React.useState(false);
-	const [selectedButton, setSelectedButton] = React.useState(null);
-	const [isDownloadModalOpen, setIsDownloadModalOpen] = React.useState(false);
-
+	console.log("User Type in NavBar:", credencial);
+	const [isModalOpen, setIsModalOpen] = useState(false);
+	const [isRequestModalOpen, setIsRequestModalOpen] = useState(false);
+	const [isJustModalOpen, setIsJustModalOpen] = useState(false);
+	const [selectedButton, setSelectedButton] = useState(null);
+	const [isDownloadModalOpen, setIsDownloadModalOpen] = useState(false);
+	const [ima, setIma] = useState(null);
+	useEffect(() => {
+		let mounted = true;
+		let objectUrlToRevoke = null;
+		const loadTeacherPhoto = async () => {
+			if (!teacherId) return;
+			try {
+				let photoSrc = await fetchTeacherPhoto(teacherId);
+				if (!mounted) return;
+				// normalizar rutas relativas que vengan sin host (p.ej. "/images/..")
+				if (photoSrc && String(photoSrc).startsWith('/')) {
+					photoSrc = `${API_URL}${photoSrc}`;
+				}
+				// si la URL existe pero falló por extensión (.jpg vs .png), intentamos autoguardar con alternativas
+				const ensureValidImageUrl = async (url) => {
+					if (!url || typeof url !== 'string') return url;
+					try {
+						const head = await fetch(url, { method: 'HEAD' });
+						if (head.ok) return url;
+					} catch (e) {
+						// ignore
+					}
+					// intentar con extensiones comunes si la url termina en .jpg/.jpeg/.png/.webp
+					const exts = ['.png', '.jpg', '.jpeg', '.webp'];
+					const idx = url.lastIndexOf('.');
+					if (idx === -1) return url;
+					const base = url.substring(0, idx);
+					for (const ext of exts) {
+						const tryUrl = base + ext;
+						try {
+							const r = await fetch(tryUrl, { method: 'HEAD' });
+							if (r.ok) return tryUrl;
+						} catch (err) {
+							// continue
+						}
+					}
+					return url;
+				};
+				photoSrc = await ensureValidImageUrl(photoSrc);
+				// si la respuesta es una object URL (blob:), la guardamos para revocarla en cleanup
+				if (photoSrc && String(photoSrc).startsWith('blob:')) objectUrlToRevoke = photoSrc;
+				setIma(photoSrc);
+			} catch (error) {
+				console.error("Failed to fetch teacher photo:", error);
+				setIma(null);
+			}
+		};
+	loadTeacherPhoto();
+	console.log("Teacher ID in NavBar:", teacherId, "photoSrc:", ima);
+		return () => {
+			mounted = false;
+			if (objectUrlToRevoke) {
+				try {
+					URL.revokeObjectURL(objectUrlToRevoke);
+				} catch (e) {
+					/* ignore */
+				}
+			}
+		};
+	}, [teacherId]);
 	const handleSearchClick = () => {
 		setIsModalOpen(true);
 	};
@@ -82,9 +143,20 @@ const NavBar = () => {
 					)}
 				</nav>
 
-				<button className={Styles["logout_button"]}>
+				<button
+					className={Styles["logout_button"]}
+					onClick={() => {
+						try {
+							clearAuthToken();
+							// reload to reflect logout state (fallback to home)
+							window.location.reload();
+						} catch (err) {
+							console.error('Logout failed:', err);
+						}
+					}}
+				>
 					<div className={Styles["logout_profile_photo-container"]}>
-						<img src="/Graphics/icons/profile.png" alt="" />
+						<img src={ima || '/Graphics/default-profile.png'} alt="Perfil" />
 					</div>
 					<p className={Styles["logout_profile_label"]}>LogOut</p>
 				</button>

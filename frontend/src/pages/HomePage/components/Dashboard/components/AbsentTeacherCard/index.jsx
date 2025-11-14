@@ -2,7 +2,6 @@ import Styles from './AbsentTeacherCard.module.css';
 import { useState, useEffect } from 'react';
 import { fechAusentTeachersList } from './Teachers.js';
 import TeacherEventCard from '../TeacherEventCard';
-import EmptyBox from '../EmptyBox/index.jsx';
 import PendingRequestsSkeleton from '../PendingRequestsSkeleton/index.jsx';
 import TeacherProfileModal from '../../../../../../shared/components/TeacherProfileModal';
 
